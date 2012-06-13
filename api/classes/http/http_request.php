@@ -58,17 +58,18 @@ class http_request {
      * http://host.com/librarycloud/v.3/api/item?otherparams=value
      */
     function build_action_params() {
-	    preg_match('/\/[^\/]+\/([^?]*)/', $this->uri, $matches);
-		$path_params = explode('/', $matches[1]);
+	// TODO: make this more configurable? We have to fiddle with this pretty often (depending on if we put it behind somethign like nginx)
+	preg_match('/\/[^\/]+\/([^?]*)/', $this->uri, $matches);
+	$path_params = explode('/', $matches[1]);
 
         // This is probably item or event
-        if (!empty($path_params[0])) {
-            $this->action_params['resource_type'] = $path_params[0];
+        if (!empty($path_params[2])) {
+            $this->action_params['resource_type'] = $path_params[2];
         }
 
         // This is the UUID of the item or event
-        if (!empty($path_params[1])) {
-            $this->action_params['resource_id'] = $path_params[1];
+        if (!empty($path_params[3])) {
+            $this->action_params['resource_id'] = $path_params[3];
         }
     }
 
