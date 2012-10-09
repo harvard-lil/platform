@@ -136,13 +136,16 @@ class solr_request_translator {
             foreach ($this->http_request->params['filter'] as $filter) {
                 preg_match('/^([^:]*:)(.*)$/', $filter, $matches);
                 $field = $matches[1];
+		$value = '*';
+
+		if (!empty($matches[2])){
+			$value = $matches[2];	
+		}
 
                 // If we have a range filter we don't want to escape the [ TO ]
                 // TODO: Should we always be escaping? Not sure...
-                if (preg_match('/^\[.+ TO/', $matches[2])) {
-                    $value = $matches[2];
-                } else {
-                    $value = solr\utils::escape_solr_value($matches[2]);
+                if (! preg_match('/^\[.+ TO/', $value)) {
+                    $value = solr\utils::escape_solr_value($value);
                 }
                 $scrubbed_filters[] = $field . $value;
             }
