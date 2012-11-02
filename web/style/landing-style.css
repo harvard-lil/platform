@@ -1,0 +1,66 @@
+body {
+  margin: 0;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 18px;
+  color: #333333;
+  background-color: #ffffff;
+}
+
+a {
+    text-decoration: none;
+    color: #F60;
+}
+
+h1 {
+  font-size: 40px;
+  line-height: 36px;
+    color: #09F;
+}
+
+h2 {
+  font-size: 24px;
+  line-height: 36px;
+
+}
+
+h3 {
+    padding-top:28px;
+    font-size: 20px;
+    line-height:10px;
+    color: #000;
+}
+
+ul{
+    margin-top: -12px;
+}
+
+#content {
+    padding: 0 3em 1em 3em;
+    max-width: 768px;
+    margin-left: auto ;
+    margin-right: auto ;
+}
+
+#bodyContent p{
+    margin-top:30px;
+    font-size:16px;
+    line-height:28px;
+}
+
+img {
+ display: block; margin-left: auto; margin-right: auto
+}
+
+#container-swap {
+ width: 300px;
+ height:300px;
+ display:block;
+    margin-left: auto ;
+    margin-right: auto ;
+ background:transparent url('../img/librarycloud-small.png') center top no-repeat;
+}
+
+#container-swap:hover{
+    background:url('../img/librarycloud-animation.gif');
+}
