@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<title>Item API</title>
-	<link href="style/docs-style.css" rel="stylesheet">
+	<link href="/v1/docs/style/docs-style.css" rel="stylesheet">
 	<meta charset="UTF-8" />
 </head>
 <body>
@@ -13,7 +13,7 @@
 			<p>The following is a guide to the API. Be sure not to miss the LibraryCloud Query Builder. It'll help you quickly build requests and view responses, without leaving the comfort of your browser.</p>
 			<div id="bodyContent">
 				<h3>Base URI for the Item API</h3>
-				<pre class="code">http://librarycloud.harvard.edu/v0.03/api/item/</pre>
+				<pre class="code">http://librarycloud.harvard.edu/v1/api/item/</pre>
 				<h3>Basic Query</h3>
 				<p>Basic queries to LibraryCloud include the field you want to search against and your query term squashed together with a colon:</p>
 				<table>
@@ -28,7 +28,7 @@
 				</table>
 				<br />
 				<p>A basic query might look something like this:</p>
-				<pre class="code">http://librarycloud.harvard.edu/v0.03/api/item/?filter=keyword:internet</pre>
+				<pre class="code">http://librarycloud.harvard.edu/v1/api/item/?filter=keyword:internet</pre>
 				<h3>Return Type</h3>
 				<p>Currently, all data is returned as JSON.</p>
 				<h3>Query Terms: Well-formedness</h3>
@@ -197,7 +197,7 @@
 				</table>
 				<br />
 				<p>A search for subjects containing the term <i>computer networks</i> might look something like this:</p>
-				<pre class="code">http://librarycloud.harvard.edu/v0.03/api/item/?filter=subject_keyword:computer%20networks</pre>
+				<pre class="code">http://librarycloud.harvard.edu/v1/api/item/?filter=subject_keyword:computer%20networks</pre>
 				<h3>Source Data: The original, supplied data</h3>
 				<p>We map incoming data to the terms listed in the <a href="#base-fields">Base Fields</a> section above but we realize that you might have a desire to deal with the original data. We've done our best to index the data as it was given to us. You'll find it in the record, in the <i>source_record</i> object. Here's an snippet of how that data appears:</p>
 				<pre class="code">
@@ -237,7 +237,7 @@
 }</pre>
 				<h3>Accessing a single record</h3>
 				<p>Each record has an <i>id</i> field and you can use that value to link to directly to the resource</p>
-				<pre class="code">http://librarycloud.harvard.edu/v0.03/api/item/BC05766D-60C9-4665-9188-135D12668DD6</pre>
+				<pre class="code">http://librarycloud.harvard.edu/v1/api/item/BC05766D-60C9-4665-9188-135D12668DD6</pre>
 
 				<h3>Faceting and filtering</h3>
 				<p>The API allows filtering and faceting on almost all fields:</p>
@@ -257,9 +257,9 @@
 				</table>
 				<br />
 				<p>A search for items containing the term <i>internet</i>, faceting on <i>holding_libs</i> might look like this:</p>
-				<pre class="code">http://librarycloud.harvard.edu/v0.03/api/item/?filter=keyword:internet&amp;facet=holding_libs</pre>
+				<pre class="code">http://librarycloud.harvard.edu/v1/api/item/?filter=keyword:internet&amp;facet=holding_libs</pre>
 				<p>You can use multiple filters to trim down your results. A search for items containing the term <i>internet</i>, faceting on search <i>holding_libs</i>, limiting ourselves to the records that have <i>michigan</i> in the notes field, might look like this:</p>
-				<pre class="code">http://librarycloud.harvard.edu/v0.03/api/item/?filter=keyword:internet&amp;filter=note_keyword:michigan&amp;facet=holding_libs</pre>
+				<pre class="code">http://librarycloud.harvard.edu/v1/api/item/?filter=keyword:internet&amp;filter=note_keyword:michigan&amp;facet=holding_libs</pre>
 				<h3>Controls</h3>
 				<p>Common API controls are available:</p>
 				<table>
@@ -278,7 +278,7 @@
 				</table>
 
 				<p>A search for items containing the term <i>internet</i>, limiting the return number 10, starting at record 30:</p>
-				<pre class="code">http://librarycloud.harvard.edu/v0.03/api/item/?filter=keyword:internet&amp;limit=10&amp;start=30</pre>
+				<pre class="code">http://librarycloud.harvard.edu/v1/api/item/?filter=keyword:internet&amp;limit=10&amp;start=30</pre>
 				
 				<a name="note-on-usage"><h3>Note on Usage</h3></a>
 				<p>Item metadata contributed by Harvard University is offered under a <a rel="nofollow" class="external text" href="http://creativecommons.org/publicdomain/zero/1.0/">Creative Commons 0</a> license. While the data is freely available for use, the Harvard Library community norms request attribution and that if others improve this data, they make those improvements equally freely available.  In addition, for data that originated in WorldCat, at OCLC’s request, we are asking users to observe the WorldCat <a href="http://www.oclc.org/worldcat/recorduse/policy/odcbynorms.htm">community norms</a>.  We believe that observing these community norms will help promote good practices, foster trust among partners, and encourage growth of the open metadata community.</p>

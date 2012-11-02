@@ -4,7 +4,7 @@ $(document).ready(function() {
 var config = (function () { 
     var my = {};
 	
-    my.request_location = 'http://hlsl8.law.harvard.edu/platform/v0.03/api/';
+    my.request_location = 'http://hlsl8.law.harvard.edu/v1/api/';
     
     my.item_options = {
     		'keyword' : 'Keyword',

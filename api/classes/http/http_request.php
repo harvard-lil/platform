@@ -56,6 +56,7 @@ class http_request {
      * Get the action parameter (the thing before the ?)
      * In the following example, item is the action param:
      * http://host.com/librarycloud/v.3/api/item?otherparams=value
+     * TODO: Have a framework parse this nastiness for us
      */
     function build_action_params() {
 	// TODO: make this more configurable? We have to fiddle with this pretty often (depending on if we put it behind somethign like nginx)
@@ -63,13 +64,13 @@ class http_request {
 	$path_params = explode('/', $matches[1]);
 
         // This is probably item or event
-        if (!empty($path_params[2])) {
-            $this->action_params['resource_type'] = $path_params[2];
+        if (!empty($path_params[1])) {
+            $this->action_params['resource_type'] = $path_params[1];
         }
 
         // This is the UUID of the item or event
-        if (!empty($path_params[3])) {
-            $this->action_params['resource_id'] = $path_params[3];
+        if (!empty($path_params[2])) {
+            $this->action_params['resource_id'] = $path_params[2];
         }
     }
 
