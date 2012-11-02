@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Item API</title>
+	<link href="../docs-style.css" rel="stylesheet">
+	<meta charset="UTF-8" />
+</head>
+<body>
+	<div id="globalWrapper">
+		<div id="content">
+			<h1>Item API</h1>
+			<p>The Harvard LibaryCloud Item API provides access to Harvard Library bibliographic data. Please review the <a href="#note-on-usage">Note on Usage</a> before you play with the API.</p>
+			<p>The following is a guide to the API. Be sure not to miss the LibraryCloud Query Builder. It'll help you quickly build requests and view responses, without leaving the comfort of your browser.</p>
+			<div id="bodyContent">
+				<h3>Base URI for the Item API</h3>
+				<pre class="code">http://librarycloud.harvard.edu/v0.03/api/item/</pre>
+				<h3>Basic Query</h3>
+				<p>Basic queries to LibraryCloud include the field you want to search against and your query term squashed together with a colon:</p>
+				<table>
+					<tr>
+						<th>Parameter name</th>
+						<th>Parameter description</th>
+					</tr>
+					<tr>
+						<td>filter</td>
+						<td>The field and query</td>
+					</tr>
+				</table>
+				<br />
+				<p>A basic query might look something like this:</p>
+				<pre class="code">http://librarycloud.harvard.edu/v0.03/api/item/?filter=keyword:internet</pre>
+				<h3>Return Type</h3>
+				<p>Currently, all data is returned as JSON.</p>
+				<h3>Query Terms: Well-formedness</h3>
+				<p>The rules for creating well-formed query terms differ according to whether the search type performs exact or keyword matching.</p>
+				<p>Keywords</p>
+				<ul>
+					<li> Case insensitive</li>
+					<li> Truncation only at word boundaries allowed</li>
+				</ul>
+				<p>Exact Searches</p>
+				<ul>
+					<li> Case sensitive</li>
+					<li> Only full values accepted</li>
+				</ul>
+				<a name="base-fields"><h3>Base Fields: Mapping to a set of common terms</h3></a>
+				<table>
+					<tr>
+						<th>Field name</th>
+						<th>Field description</th>
+					</tr>
+					<tr>
+						<td>keyword</td>
+						<td>Almost all of a record's fields get copied to this field. This is the place to start if you don't know where to start. Keyword matching.</td>
+					</tr>
+					<tr>
+						<td>id</td>
+						<td>The identifier given to the item here in LibraryCloud. Exact matching.</td>
+					</tr>
+					<tr>
+						<td>title</td>
+						<td>The title and/or subtitle of the item. Exact matching.</td>
+					</tr>
+					<tr>
+						<td>title_keyword</td>
+						<td>The title and/or subtitle of the item. Keyword matching.</td>
+					</tr>
+					<tr>
+						<td>creator</td>
+						<td>The creator(s), contributor(s), editor(s), etc. of the item. Exact matching.</td>
+					</tr>
+					<tr>
+						<td>creator_keyword</td>
+						<td>The creator(s), contributor(s), editor(s), etc. of the item. Keyword matching.</td>
+					</tr>
+					<tr>
+						<td>note</td>
+						<td>Notes and descriptions. This often includes the item's Table of Contents. Exact matching.</td>
+					</tr>
+					<tr>
+						<td>note_keyword</td>
+						<td>Notes and descriptions. This often includes the item's Table of Contents. Keyword matching.</td>
+					</tr>
+					<tr>
+						<td>lcsh</td>
+						<td>The Library of Congress Subject Headings for this item. Exact matching.</td>
+					</tr>
+					<tr>
+						<td>lcsh_keyword</td>
+						<td>The Library of Congress Subject Headings for this item. Keyword matching.</td>
+					</tr>
+					<tr>
+						<td>publisher</td>
+						<td>The name of the publisher. Exact matching.</td>
+					</tr>
+					<tr>
+						<td>pub_date</td>
+						<td>The item's date of publication. Exact Matching.</td>
+					</tr>
+					<tr>
+						<td>pub_location</td>
+						<td>The item's location of publication. Exact Matching.</td>
+					</tr>
+					<tr>
+						<td>format</td>
+						<td>The format of the item. Things like Book or Serial. Exact matching.</td>
+					</tr>
+					<tr>
+						<td>language</td>
+						<td>The primary language of the item. Exact matching.</td>
+					</tr>
+					<tr>
+						<td>pages</td>
+						<td>The number of pages. Exact matching.</td>
+					</tr>
+					<tr>
+						<td>height</td>
+						<td>The height, usually in centimeters, of of the item. Exact matching.</td>
+					</tr>
+					<tr>
+						<td>id_inst</td>
+						<td>The Harvard Library's unique identifier (HOLLIS ID) for the item. Exact matching.</td>
+					</tr>
+					<tr>
+						<td>id_isbn</td>
+						<td>The item's ISBN. Exact matching.</td>
+					</tr>
+					<tr>
+						<td>id_oclc</td>
+						<td>The item's OCLC identifier. Exact matching.</td>
+					</tr>
+					<tr>
+						<td>id_lccn</td>
+						<td>The item's LCCN. Exact matching.</td>
+					</tr>
+					<tr>
+						<td>call_num</td>
+						<td>The item's call number. Exact matching.</td>
+					</tr>
+					<tr>
+						<td>url</td>
+						<td>A link to the item's content. Exact matching.</td>
+					</tr>
+					<tr>
+						<td>holding_libs</td>
+						<td>The libraries that hold the item at Harvard. Exact matching.</td>
+					</tr>
+				</table>
+				<br />
+				<p>In addition to the traditional bibliographic data listed above, we try to associate community engagement values for each record. These are often unreliable, rough guess, based on data since 2002.</p>
+				
+				<table>
+					<tr>
+						<th>Field name</th>
+						<th>Field description</th>
+					</tr>
+					<tr>
+						<td>shelfrank</td>
+						<td>The items' ShelfRank. This is a rough, normalized, tally of community engagement. 1 to 100. It's built form the scores below. Exact matching.</td>
+					</tr>
+					<tr>
+						<td>score_checkouts_undergrad</td>
+						<td>The number of times the item has been checked out by undergraduates. Exact matching.</td>
+					</tr>
+					<tr>
+						<td>score_checkouts_grad</td>
+						<td>The number of times the item has been checked out by graduate students. Exact matching.</td>
+					</tr>
+					<tr>
+						<td>score_checkouts_fac</td>
+						<td>The number of times the item has been checked out by faculty. Exact matching.</td>
+					</tr>
+					<tr>
+						<td>score_reserves</td>
+						<td>The number of times the item has been placed on reserve. Exact matching.</td>
+					</tr>
+					<tr>
+						<td>score_recalls</td>
+						<td>The number of times the item has been recalled. Exact matching.</td>
+					</tr>
+					<tr>
+						<td>score_course_texts</td>
+						<td>The number of times the item has been used in a course. Exact matching.</td>
+					</tr>
+					<tr>
+						<td>score_holding_libs</td>
+						<td>The number of libraries that have a copy of this item. Exact matching.</td>
+					</tr>
+					<tr>
+						<td>score_extra_copies</td>
+						<td>The number of extra copies purchased. Exact matching.</td>
+					</tr>
+					<tr>
+						<td>total_score</td>
+						<td>The scores above totaled. Not normalized. Exact matching.</td>
+					</tr>
+				</table>
+				<br />
+				<p>A search for subjects containing the term <i>computer networks</i> might look something like this:</p>
+				<pre class="code">http://librarycloud.harvard.edu/v0.03/api/item/?filter=subject_keyword:computer%20networks</pre>
+				<h3>Source Data: The original, supplied data</h3>
+				<p>We map incoming data to the terms listed in the <a href="#base-fields">Base Fields</a> section above but we realize that you might have a desire to deal with the original data. We've done our best to index the data as it was given to us. You'll find it in the record, in the <i>source_record</i> object. Here's an snippet of how that data appears:</p>
+				<pre class="code">
+{
+	title: "The identification of the pines...",
+	pages: "21 p",
+	source_record: {
+		504a: "Bibliography: p. 19.",
+		650a: [
+			"Pine",
+			"Pine.",
+			"Leaves",
+			"Leaves"
+		],
+		500a: [
+			"Bulletin of the New York state college...",
+			"Descriptive letterpress on versos facing the plates."
+		],
+		...
+		050a: "QK495.C75",
+		050b: "H3",
+		650z: "United States",
+		300a: "21 p.",
+		490a: "New York State College of...",
+
+		650x: [
+			"Identification.",
+			"Morphology.",
+			"Anatomy."
+		],
+		010a: "   31015677 ",
+		082a: "585.2",
+		100a: "Harlow, William Morehouse,",
+		300c: "24 cm.",
+		100d: "1900-"
+	}
+}</pre>
+				<h3>Accessing a single record</h3>
+				<p>Each record has an <i>id</i> field and you can use that value to link to directly to the resource</p>
+				<pre class="code">http://librarycloud.harvard.edu/v0.03/api/item/BC05766D-60C9-4665-9188-135D12668DD6</pre>
+
+				<h3>Faceting and filtering</h3>
+				<p>The API allows filtering and faceting on almost all fields:</p>
+				<table>
+					<tr>
+						<th>Parameter name</th>
+						<th>Parameter description</th>
+					</tr>
+					<tr>
+						<td>facet</td>
+						<td>The field you want to facet on</td>
+					</tr>
+					<tr>
+						<td>filter</td>
+						<td>You can narrow queries by using filters. Syntax looks like this: fieldname:filter (example: language:English)</td>
+					</tr>
+				</table>
+				<br />
+				<p>A search for items containing the term <i>internet</i>, faceting on <i>holding_libs</i> might look like this:</p>
+				<pre class="code">http://librarycloud.harvard.edu/v0.03/api/item/?filter=keyword:internet&amp;facet=holding_libs</pre>
+				<p>You can use multiple filters to trim down your results. A search for items containing the term <i>internet</i>, faceting on search <i>holding_libs</i>, limiting ourselves to the records that have <i>michigan</i> in the notes field, might look like this:</p>
+				<pre class="code">http://librarycloud.harvard.edu/v0.03/api/item/?filter=keyword:internet&amp;filter=note_keyword:michigan&amp;facet=holding_libs</pre>
+				<h3>Controls</h3>
+				<p>Common API controls are available:</p>
+				<table>
+					<tr>
+						<th>Parameter name</th>
+						<th>Parameter description</th>
+					</tr>
+					<tr>
+						<td>limit</td>
+						<td>Number of records to return</td>
+					</tr>
+					<tr>
+						<td>start</td>
+						<td>The starting point in the result set</td>
+					</tr>
+				</table>
+
+				<p>A search for items containing the term <i>internet</i>, limiting the return number 10, starting at record 30:</p>
+				<pre class="code">http://librarycloud.harvard.edu/v0.03/api/item/?filter=keyword:internet&amp;limit=10&amp;start=30</pre>
+				
+				<a name="note-on-usage"><h3>Note on Usage</h3></a>
+				<p>Item metadata contributed by Harvard University is offered under a <a rel="nofollow" class="external text" href="http://creativecommons.org/publicdomain/zero/1.0/">Creative Commons 0</a> license. While the data is freely available for use, the Harvard Library community norms request attribution and that if others improve this data, they make those improvements equally freely available.  In addition, for data that originated in WorldCat, at OCLC’s request, we are asking users to observe the WorldCat <a href="http://www.oclc.org/worldcat/recorduse/policy/odcbynorms.htm">community norms</a>.  We believe that observing these community norms will help promote good practices, foster trust among partners, and encourage growth of the open metadata community.</p>
+				<p>The API is not intended to be used to acquire Harvard data sets in their entirety. Not only is that an inefficient way to gather the data, it can also have an adverse affect on the performance of the API for others. Note also that the data sets are available for bulk download here: <a href="http://openmetadata.lib.harvard.edu/bibdata">http://openmetadata.lib.harvard.edu/bibdata</a>.</p>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

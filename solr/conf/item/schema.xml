@@ -369,86 +369,89 @@ any data added to them will be ignored outright.  -->
 
 
 <fields>
-	<field name="lc_id" type="string" indexed="true" stored="true" required="true" />
+	<field name="id" type="string" indexed="true" stored="true" required="true" />
 
 	<!-- Original fields (text as it was supplied) -->
-	<field name="lc_title" type="string" indexed="true" stored="true"/>
-	<field name="lc_title_sort" type="string" indexed="false" stored="true"/>
-	<field name="lc_title_link_friendly" type="string" indexed="false" stored="true"/>
-	<field name="lc_sub_title" type="string" indexed="true" stored="true"/>
-	<field name="lc_creator" type="string" indexed="true" stored="true" multiValued="true"/>
-	<field name="lc_publisher" type="string" indexed="true" stored="true"/>
-	<field name="lc_pub_location" type="string" indexed="true" stored="true"/>
-	<field name="lc_pub_date" type="string" indexed="true" stored="true"/>
-	<field name="lc_pub_date_numeric" type="int" indexed="true" stored="true"/>
-	<field name="lc_format" type="string" indexed="true" stored="true"/>
-	<field name="lc_language" type="string" indexed="true" stored="true"/>
-	<field name="lc_pages" type="string" indexed="true" stored="true"/>
-	<field name="lc_pages_numeric" type="int" indexed="true" stored="true"/>
-	<field name="lc_height" type="string" indexed="true" stored="true"/>
-	<field name="lc_height_numeric" type="int" indexed="true" stored="true"/>
+	<field name="title" type="string" indexed="true" stored="true"/>
+	<field name="title_sort" type="string" indexed="false" stored="true"/>
+	<field name="title_link_friendly" type="string" indexed="false" stored="true"/>
+	<field name="sub_title" type="string" indexed="true" stored="true"/>
+	<field name="creator" type="string" indexed="true" stored="true" multiValued="true"/>
+	<field name="publisher" type="string" indexed="true" stored="true"/>
+	<field name="pub_location" type="string" indexed="true" stored="true"/>
+	<field name="pub_date" type="string" indexed="true" stored="true"/>
+	<field name="pub_date_numeric" type="int" indexed="true" stored="true"/>
+	<field name="format" type="string" indexed="true" stored="true"/>
+	<field name="language" type="string" indexed="true" stored="true"/>
+	<field name="pages" type="string" indexed="true" stored="true"/>
+	<field name="pages_numeric" type="int" indexed="true" stored="true"/>
+	<field name="height" type="string" indexed="true" stored="true"/>
+	<field name="height_numeric" type="int" indexed="true" stored="true"/>
 
-	<field name="lc_call_num" type="string" indexed="true" stored="true" multiValued="true"/>
-	<field name="lc_lcsh" type="string" indexed="true" stored="true" multiValued="true"/>
+	<field name="call_num" type="string" indexed="true" stored="true" multiValued="true"/>
+	<field name="lcsh" type="string" indexed="true" stored="true" multiValued="true"/>
 
-	<field name="lc_id_inst" type="string" indexed="true" stored="true"/>
-	<field name="lc_id_isbn" type="string" indexed="true" stored="true"  multiValued="true"/>
-	<field name="lc_id_lccn" type="string" indexed="true" stored="true"/>
-	<field name="lc_id_oclc" type="string" indexed="true" stored="true"/>
+	<field name="id_inst" type="string" indexed="true" stored="true"/>
+	<field name="id_isbn" type="string" indexed="true" stored="true"  multiValued="true"/>
+	<field name="id_lccn" type="string" indexed="true" stored="true"/>
+	<field name="id_oclc" type="string" indexed="true" stored="true"/>
 
-	<field name="lc_online_avail" type="string" indexed="true" stored="true"/>
+	<field name="online_avail" type="string" indexed="true" stored="true"/>
 
-	<field name="lc_ut_id" type="string" indexed="true" stored="true"/>
-	<field name="lc_ut_count" type="int" indexed="true" stored="true"/>
+	<field name="ut_id" type="string" indexed="true" stored="true"/>
+	<field name="ut_count" type="int" indexed="true" stored="true"/>
 
-	<field name="lc_loc_call_num_subject" type="string" indexed="true" stored="true"/>
+	<field name="loc_call_num_subject" type="string" indexed="true" stored="true"/>
 
-	<field name="lc_data_source" type="string" indexed="true" stored="true"/>
-	<field name="lc_dataset_tag" type="string" indexed="true" stored="true"/>
+	<field name="data_source" type="string" indexed="true" stored="true"/>
+	<field name="dataset_tag" type="string" indexed="true" stored="true"/>
 	
-	<field name="lc_shelfrank" type="int" indexed="true" stored="true"/>
-	<field name="lc_score_checkouts_undergrad" type="int" indexed="true" stored="true"/>
-	<field name="lc_score_checkouts_grad" type="int" indexed="true" stored="true"/>
-	<field name="lc_score_checkouts_fac" type="int" indexed="true" stored="true"/>
-	<field name="lc_score_reserves" type="int" indexed="true" stored="true"/>
-	<field name="lc_score_recalls" type="int" indexed="true" stored="true"/>
-	<field name="lc_score_course_texts" type="int" indexed="true" stored="true"/>
-	<field name="lc_score_holding_libs" type="int" indexed="true" stored="true"/>
-	<field name="lc_score_extra_copies" type="int" indexed="true" stored="true"/>
-	<field name="lc_total_score" type="int" indexed="true" stored="true"/>
+	<field name="shelfrank" type="int" indexed="true" stored="true"/>
+	<field name="score_checkouts_undergrad" type="int" indexed="true" stored="true"/>
+	<field name="score_checkouts_grad" type="int" indexed="true" stored="true"/>
+	<field name="score_checkouts_fac" type="int" indexed="true" stored="true"/>
+	<field name="score_reserves" type="int" indexed="true" stored="true"/>
+	<field name="score_recalls" type="int" indexed="true" stored="true"/>
+	<field name="score_course_texts" type="int" indexed="true" stored="true"/>
+	<field name="score_holding_libs" type="int" indexed="true" stored="true"/>
+	<field name="score_extra_copies" type="int" indexed="true" stored="true"/>
+	<field name="total_score" type="int" indexed="true" stored="true"/>
 
-	<field name="lc_note" type="string" indexed="true" stored="true" multiValued="true"/>
+	<field name="note" type="string" indexed="true" stored="true" multiValued="true"/>
 
-	<field name="lc_holding_libs" type="string" indexed="true" stored="true" multiValued="true"/>
+	<field name="holding_libs" type="string" indexed="true" stored="true" multiValued="true"/>
 
-	<field name="lc_loc_call_num_sort_order" type="int" indexed="true" stored="true" multiValued="true"/>
+	<field name="loc_call_num_sort_order" type="int" indexed="true" stored="true" multiValued="true"/>
 
-	<field name="lc_url" type="string" indexed="true" stored="true" multiValued="true"/>
+	<field name="url" type="string" indexed="true" stored="true" multiValued="true"/>
 
 
 	<!-- Keyword searching (normalize text, stem it, etc. here)-->
-	<field name="lc_title_keyword" type="text" indexed="true" stored="false" multiValued="true" omitNorms="true"/>
-	<copyField source="lc_title" dest="lc_title_keyword"/>
-	<copyField source="lc_sub_title" dest="lc_title_keyword"/>
+	<field name="title_keyword" type="text" indexed="true" stored="false" multiValued="true" omitNorms="true"/>
+	<copyField source="title" dest="title_keyword"/>
+	<copyField source="sub_title" dest="title_keyword"/>
 
-	<field name="lc_creator_keyword" type="text_basic" indexed="true" stored="false" multiValued="true" omitNorms="true"/>
-	<copyField source="lc_creator" dest="lc_creator_keyword"/>
+	<field name="creator_keyword" type="text_basic" indexed="true" stored="false" multiValued="true" omitNorms="true"/>
+	<copyField source="creator" dest="creator_keyword"/>
 
-	<field name="lc_lcsh_keyword" type="text" indexed="true" stored="false" multiValued="true" omitNorms="true"/>
-	<copyField source="lc_lcsh" dest="lc_lcsh_keyword"/>
+	<field name="lcsh_keyword" type="text" indexed="true" stored="false" multiValued="true" omitNorms="true"/>
+	<copyField source="lcsh" dest="lcsh_keyword"/>
+
+	<field name="note_keyword" type="text" indexed="true" stored="false" multiValued="true" omitNorms="true"/>
+	<copyField source="note" dest="note_keyword"/>
 
 
 	<dynamicField name="*"  type="string"  indexed="true"  stored="true"/>
 
 
 	<!-- The kitchen sink (copy everything to the keyword field for one-field searching)-->
-	<field name="lc_keyword" type="text" indexed="true" stored="false" multiValued="true" omitNorms="true"/>
-	<copyField source="*" dest="lc_keyword"/>
+	<field name="keyword" type="text" indexed="true" stored="false" multiValued="true" omitNorms="true"/>
+	<copyField source="*" dest="keyword"/>
 </fields>
 
-<uniqueKey>lc_id</uniqueKey>
+<uniqueKey>id</uniqueKey>
 
-<defaultSearchField>lc_keyword</defaultSearchField>
+<defaultSearchField>keyword</defaultSearchField>
 <solrQueryParser defaultOperator="AND"/>
 
 </schema>

@@ -7,7 +7,7 @@ ini_set("memory_limit","900M");
 define('LC_HOME', dirname(dirname(__FILE__)).'/' );
 require_once LC_HOME . 'lib/SolrPhpClient/Apache/Solr/Service.php';
 
-$lc_config = parse_ini_file(LC_HOME . 'etc/data_load_mongo.ini');
+$config = parse_ini_file(LC_HOME . 'etc/data_load_mongo.ini');
 
 // Call our function that does the heavy lifting
 index_items();
@@ -20,9 +20,9 @@ function index_items() {
 
     echo "Throwing a crapload of records at Solr. Hold tight...\n";
 
-    global $lc_config;
+    global $config;
     
-    $solr = new \Apache_Solr_Service($lc_config['solr_host'], $lc_config['solr_port'], $lc_config['solr_path']);
+    $solr = new \Apache_Solr_Service($config['solr_host'], $config['solr_port'], $config['solr_path']);
     if ( ! $solr->ping() ) {
         echo 'Solr service not responding';
         exit;
@@ -30,9 +30,9 @@ function index_items() {
         echo "Connected to Solr...\n";
     }
 
-    $m = new \Mongo($lc_config['mongo_connection']);
-    $db = $m->selectDB($lc_config['mongo_db']);
-    $collection = $db->selectCollection($lc_config['mongo_collection']);
+    $m = new \Mongo($config['mongo_connection']);
+    $db = $m->selectDB($config['mongo_db']);
+    $collection = $db->selectCollection($config['mongo_collection']);
     $cursor = $collection->find()->batchSize(400);
     
     $count = 0;
@@ -48,132 +48,132 @@ function index_items() {
 
         // Process our mapped terms
         // TODO: This has grown insanely verbose. Almost all of this can be handled by two functions (process common term, process common list):
-        foreach ($obj['lc'] as $lc_key => $lc_value) {
-            if ($lc_key == 'id') {
-                parse_id($solr_document, $lc_value);
+        foreach ($obj['lc'] as $key => $value) {
+            if ($key == 'id') {
+                parse_id($solr_document, $value);
             }
-            if ($lc_key == 'title') {
-                parse_title($solr_document, $lc_value);
+            if ($key == 'title') {
+                parse_title($solr_document, $value);
             }
-            if ($lc_key == 'title_sort') {
-                parse_title_sort($solr_document, $lc_value);
+            if ($key == 'title_sort') {
+                parse_title_sort($solr_document, $value);
             }
-            if ($lc_key == 'title_link_friendly') {
-                parse_title_link_friendly($solr_document, $lc_value);
+            if ($key == 'title_link_friendly') {
+                parse_title_link_friendly($solr_document, $value);
             }
-            if ($lc_key == 'title_sort') {
-                parse_title_sort($solr_document, $lc_value);
+            if ($key == 'title_sort') {
+                parse_title_sort($solr_document, $value);
             }
-            if ($lc_key == 'creator') {
-                parse_creator($solr_document, $lc_value);
+            if ($key == 'creator') {
+                parse_creator($solr_document, $value);
             }
-            if ($lc_key == 'publisher') {
-                parse_publisher($solr_document, $lc_value);
+            if ($key == 'publisher') {
+                parse_publisher($solr_document, $value);
             }
-            if ($lc_key == 'pub_location') {
-                parse_pub_location($solr_document, $lc_value);
+            if ($key == 'pub_location') {
+                parse_pub_location($solr_document, $value);
             }
-            if ($lc_key == 'pub_date') {
-                parse_pub_date($solr_document, $lc_value);
+            if ($key == 'pub_date') {
+                parse_pub_date($solr_document, $value);
             }
-            if ($lc_key == 'pub_date_numeric') {
-                parse_pub_date_numeric($solr_document, $lc_value);
+            if ($key == 'pub_date_numeric') {
+                parse_pub_date_numeric($solr_document, $value);
             }
-            if ($lc_key == 'format') {
-                parse_format($solr_document, $lc_value);
+            if ($key == 'format') {
+                parse_format($solr_document, $value);
             }
-            if ($lc_key == 'language') {
-                parse_language($solr_document, $lc_value);
+            if ($key == 'language') {
+                parse_language($solr_document, $value);
             }
-            if ($lc_key == 'pages') {
-                parse_pages($solr_document, $lc_value);
+            if ($key == 'pages') {
+                parse_pages($solr_document, $value);
             }
-            if ($lc_key == 'pages_numeric') {
-                parse_pages_numeric($solr_document, $lc_value);
+            if ($key == 'pages_numeric') {
+                parse_pages_numeric($solr_document, $value);
             }
-            if ($lc_key == 'height') {
-                parse_height($solr_document, $lc_value);
+            if ($key == 'height') {
+                parse_height($solr_document, $value);
             }
-            if ($lc_key == 'height_numeric') {
-                parse_height_numeric($solr_document, $lc_value);
+            if ($key == 'height_numeric') {
+                parse_height_numeric($solr_document, $value);
             }
-            if ($lc_key == 'call_number') {
-                parse_call_number($solr_document, $lc_value);
+            if ($key == 'call_number') {
+                parse_call_number($solr_document, $value);
             }
-            if ($lc_key == 'lsch') {
-                parse_lcsh($solr_document, $lc_value);
+            if ($key == 'lcsh') {
+                parse_lcsh($solr_document, $value);
             }
-            if ($lc_key == 'id_inst') {
-                parse_id_inst($solr_document, $lc_value);
+            if ($key == 'id_inst') {
+                parse_id_inst($solr_document, $value);
             }
-            if ($lc_key == 'id_isbn') {
-                parse_id_isbn($solr_document, $lc_value);
+            if ($key == 'id_isbn') {
+                parse_id_isbn($solr_document, $value);
             }
-            if ($lc_key == 'id_lccn') {
-                parse_id_lccn($solr_document, $lc_value);
+            if ($key == 'id_lccn') {
+                parse_id_lccn($solr_document, $value);
             }
-            if ($lc_key == 'id_oclc') {
-                parse_id_oclc($solr_document, $lc_value);
+            if ($key == 'id_oclc') {
+                parse_id_oclc($solr_document, $value);
             }
-            if ($lc_key == 'online_avail') {
-                parse_online_avail($solr_document, $lc_value);
+            if ($key == 'online_avail') {
+                parse_online_avail($solr_document, $value);
             }
-            if ($lc_key == 'ut_id') {
-                parse_ut_id($solr_document, $lc_value);
+            if ($key == 'ut_id') {
+                parse_ut_id($solr_document, $value);
             }
-            if ($lc_key == 'ut_count') {
-                parse_ut_count($solr_document, $lc_value);
+            if ($key == 'ut_count') {
+                parse_ut_count($solr_document, $value);
             }
-            if ($lc_key == 'loc_call_num_subject') {
-                parse_loc_call_num_subject($solr_document, $lc_value);
+            if ($key == 'loc_call_num_subject') {
+                parse_loc_call_num_subject($solr_document, $value);
             }
-            if ($lc_key == 'data_source') {
-                parse_data_source($solr_document, $lc_value);
+            if ($key == 'data_source') {
+                parse_data_source($solr_document, $value);
             }
-            if ($lc_key == 'dataset_tag') {
-                parse_dataset_tag($solr_document, $lc_value);
+            if ($key == 'dataset_tag') {
+                parse_dataset_tag($solr_document, $value);
             }
-            if ($lc_key == 'shelfrank') {
-                parse_shelfrank($solr_document, $lc_value);
+            if ($key == 'shelfrank') {
+                parse_shelfrank($solr_document, $value);
             }
-            if ($lc_key == 'score_checkouts_undergrad') {
-                parse_score_checkouts_undergrad($solr_document, $lc_value);
+            if ($key == 'score_checkouts_undergrad') {
+                parse_score_checkouts_undergrad($solr_document, $value);
             }
-            if ($lc_key == 'score_checkouts_grad') {
-                parse_score_checkouts_grad($solr_document, $lc_value);
+            if ($key == 'score_checkouts_grad') {
+                parse_score_checkouts_grad($solr_document, $value);
             }
-            if ($lc_key == 'score_checkouts_fac') {
-                parse_score_checkouts_fac($solr_document, $lc_value);
+            if ($key == 'score_checkouts_fac') {
+                parse_score_checkouts_fac($solr_document, $value);
             }
-            if ($lc_key == 'score_reserves') {
-                parse_score_reserves($solr_document, $lc_value);
+            if ($key == 'score_reserves') {
+                parse_score_reserves($solr_document, $value);
             }
-            if ($lc_key == 'score_recalls') {
-                parse_score_recalls($solr_document, $lc_value);
+            if ($key == 'score_recalls') {
+                parse_score_recalls($solr_document, $value);
             }
-            if ($lc_key == 'score_course_texts') {
-                parse_score_course_texts($solr_document, $lc_value);
+            if ($key == 'score_course_texts') {
+                parse_score_course_texts($solr_document, $value);
             }
-            if ($lc_key == 'score_holding_libs') {
-                parse_score_holding_libs($solr_document, $lc_value);
+            if ($key == 'score_holding_libs') {
+                parse_score_holding_libs($solr_document, $value);
             }
-            if ($lc_key == 'score_extra_copies') {
-                parse_score_extra_copies($solr_document, $lc_value);
+            if ($key == 'score_extra_copies') {
+                parse_score_extra_copies($solr_document, $value);
             }
-            if ($lc_key == 'total_score') {
-                parse_total_score($solr_document, $lc_value);
+            if ($key == 'total_score') {
+                parse_total_score($solr_document, $value);
             }
-            if ($lc_key == 'note') {
-                parse_note($solr_document, $lc_value);
+            if ($key == 'note') {
+                parse_note($solr_document, $value);
             }
-            if ($lc_key == 'holding_libs') {
-                parse_holding_libs($solr_document, $lc_value);
+            if ($key == 'holding_libs') {
+                parse_holding_libs($solr_document, $value);
             }
-            if ($lc_key == 'loc_call_num_sort_order') {
-                parse_loc_call_num_sort_order($solr_document, $lc_value);
+            if ($key == 'loc_call_num_sort_order') {
+                parse_loc_call_num_sort_order($solr_document, $value);
             }
-            if ($lc_key == 'url') {
-                parse_url($solr_document, $lc_value);
+            if ($key == 'url') {
+                parse_url($solr_document, $value);
             }
         }
         
@@ -220,120 +220,120 @@ function index_items() {
 // TODO: generalize a whole bunch of the mess below
 /////////
 
-// Given a lc_id object, add it to a solr doc
-function parse_id($document, $lc_id) {
-    if (!empty($lc_id) && $lc_id != 'NULL' && $lc_id != 'n/a') {
-        $document->addField('lc_id', $lc_id);
-        //print "\nlc_id = $lc_id \n";
+// Given a id object, add it to a solr doc
+function parse_id($document, $id) {
+    if (!empty($id) && $id != 'NULL' && $id != 'n/a') {
+        $document->addField('id', $id);
+        //print "\nid = $id \n";
     }
 }
 
 // Given a title object, add it to a solr doc
 function parse_title($document, $title) {
     if (!empty($title) && $title != 'NULL' && $title != 'n/a') {
-        $document->addField('lc_title', $title);
-        //print "\nlc_title = $title \n";
+        $document->addField('title', $title);
+        //print "\ntitle = $title \n";
     }
 }
 
 // Given a title_sort object, add it to a solr doc
 function parse_title_sort($document, $value) {
     if (!empty($value) && $value != 'NULL' && $value != 'n/a') {
-        $document->addField('lc_title_sort', $value);
+        $document->addField('title_sort', $value);
     }
 }
 
 // Given a title_link_friendly object, add it to a solr doc
 function parse_title_link_friendly($document, $value) {
     if (!empty($value) && $value != 'NULL' && $value != 'n/a') {
-        $document->addField('lc_title_link_friendly', $value);
+        $document->addField('title_link_friendly', $value);
     }
 }
 
 // Given a sub_title object, add it to a solr doc
 function parse_sub_title($document, $value) {
     if (!empty($value) && $title != 'NULL' && $value != 'n/a') {
-        $document->addField('lc_sub_title', $value);
+        $document->addField('sub_title', $value);
     }
 }
 
 // Given a creator object, add it to a solr doc
 function parse_creator($document, $creators) {
     foreach ($creators as $creator) {
-        $document->addField('lc_creator', $creator);
-        //print "\nlc_creator = $name \n\n";
+        $document->addField('creator', $creator);
+        //print "\ncreator = $name \n\n";
     }
 }
 
 // Given a publisher object, add it to a solr doc
 function parse_publisher($document, $publisher) {
     if (!empty($publisher) && $publisher != 'NULL' && $publisher != 'n/a') {
-        $document->addField('lc_publisher', $publisher);
-        //print "\nlc_publisher = $publisher \n";
+        $document->addField('publisher', $publisher);
+        //print "\npublisher = $publisher \n";
     }
 }
 
 // Given a parse_pub_location object, add it to a solr doc
 function parse_pub_location($document, $value) {
     if (!empty($value) && $value != 'NULL' && $value != 'n/a') {
-        $document->addField('lc_pub_location', $value);
+        $document->addField('pub_location', $value);
     }
 }
 
 // Given a pub_date object, add it to a solr doc
 function parse_pub_date($document, $value) {
     if (!empty($value) && $value != 'NULL' && $value != 'n/a') {
-        $document->addField('lc_pub_date', $value);
+        $document->addField('pub_date', $value);
     }
 }
 
 // Given a pub_date_numeric object, add it to a solr doc
 function parse_pub_date_numeric($document, $value) {
     if (!empty($value) && $value != 'NULL' && $value != 'n/a') {
-        $document->addField('lc_pub_date_numeric', $value);
+        $document->addField('pub_date_numeric', $value);
     }
 }
 
 // Given a format object, add it to a solr doc
 function parse_format($document, $value) {
     if (!empty($value) && $value != 'NULL' && $value != 'n/a') {
-        $document->addField('lc_format', $value);
+        $document->addField('format', $value);
     }
 }
 
 // Given a language object, add it to a solr doc
 function parse_language($document, $language) {
     if (!empty($language) && $language != 'NULL' && $language != 'n/a') {
-        $document->addField('lc_language', $language);
-        //print "\nlc_language = $language \n";
+        $document->addField('language', $language);
+        //print "\nlanguage = $language \n";
     }
 }
 
 // Given a pages object, add it to a solr doc
 function parse_pages($document, $value) {
     if (!empty($value) && $value != 'NULL' && $value != 'n/a') {
-        $document->addField('lc_pages', $value);
+        $document->addField('pages', $value);
     }
 }
 
 // Given a pages_numeric object, add it to a solr doc
 function parse_pages_numeric($document, $value) {
     if (!empty($value) && $value != 'NULL' && $value != 'n/a') {
-        $document->addField('lc_pages_numeric', $value);
+        $document->addField('pages_numeric', $value);
     }
 }
 
 // Given a height object, add it to a solr doc
 function parse_height($document, $value) {
     if (!empty($value) && $value != 'NULL' && $value != 'n/a') {
-        $document->addField('lc_height', $value);
+        $document->addField('height', $value);
     }
 }
 
 // Given a pages_height object, add it to a solr doc
 function parse_height_numeric($document, $value) {
     if (!empty($value) && $value != 'NULL' && $value != 'n/a') {
-        $document->addField('lc_height_numeric', $value);
+        $document->addField('height_numeric', $value);
     }
 }
 
@@ -342,8 +342,8 @@ function parse_call_number($document, $call_num) {
     foreach ($call_num as $key => $value) {
         foreach ($value as $type => $type_value) {
             if ($type_value == 'value' && !empty($type_value) && $type_value != 'NULL' && $type_value != 'n/a') {
-                $document->addField('lc_call_num', $type_value);
-                //print "\nlc_call_num = $type_value \n\n";
+                $document->addField('call_num', $type_value);
+                //print "\ncall_num = $type_value \n\n";
             }
         }
     }
@@ -353,8 +353,8 @@ function parse_call_number($document, $call_num) {
 function parse_lcsh($document, $subjects) {
     foreach ($subjects as $subject) {
         if (!empty($subject) && $subject != 'NULL' && $subject != 'n/a') {
-            $document->addField('lc_lcsh', $subject);
-            //print "\nlc_subject = $subject \n";
+            $document->addField('lcsh', $subject);
+            //print "\nsubject = $subject \n";
         }
     }
 }
@@ -362,7 +362,7 @@ function parse_lcsh($document, $subjects) {
 // Given an id_inst object, add it to a solr doc
 function parse_id_inst($document, $value) {
     if (!empty($value) && $value != 'NULL' && $value != 'n/a') {
-        $document->addField('lc_id_inst', $value);
+        $document->addField('id_inst', $value);
     }
 }
 
@@ -370,8 +370,8 @@ function parse_id_inst($document, $value) {
 function parse_id_isbn($document, $values) {
     foreach ($values as $value) {
         if (!empty($value) && $value != 'NULL' && $value != 'n/a') {
-            $document->addField('lc_id_isbn', $value);
-            //print "\nlc_subject = $subject \n";
+            $document->addField('id_isbn', $value);
+            //print "\nsubject = $subject \n";
         }
     }
 }
@@ -379,126 +379,126 @@ function parse_id_isbn($document, $values) {
 // Given an id_lccn object, add it to a solr doc
 function parse_id_lccn($document, $value) {
     if (!empty($value) && $value != 'NULL' && $value != 'n/a') {
-        $document->addField('lc_id_lccn', $value);
+        $document->addField('id_lccn', $value);
     }
 }
 
 // Given an id_oclc object, add it to a solr doc
 function parse_id_oclc($document, $value) {
     if (!empty($value) && $value != 'NULL' && $value != 'n/a') {
-        $document->addField('lc_id_oclc', $value);
+        $document->addField('id_oclc', $value);
     }
 }
 
 // Given an online_avail object, add it to a solr doc
 function parse_online_avail($document, $value) {
     if (!empty($value) && $value != 'NULL' && $value != 'n/a') {
-        $document->addField('lc_online_avail', $value);
+        $document->addField('online_avail', $value);
     }
 }
 
 // Given an ut_id object, add it to a solr doc
 function parse_ut_id($document, $value) {
     if (!empty($value) && $value != 'NULL' && $value != 'n/a') {
-        $document->addField('lc_ut_id', $value);
+        $document->addField('ut_id', $value);
     }
 }
 
 // Given an ut_count object, add it to a solr doc
 function parse_ut_count($document, $value) {
     if (!empty($value) && $value != 'NULL' && $value != 'n/a') {
-        $document->addField('lc_ut_count', $value);
+        $document->addField('ut_count', $value);
     }
 }
                 
 // Given an loc_call_num_subject object, add it to a solr doc
 function parse_loc_call_num_subject($document, $value) {
     if (!empty($value) && $value != 'NULL' && $value != 'n/a') {
-        $document->addField('lc_loc_call_num_subject', $value);
+        $document->addField('loc_call_num_subject', $value);
     }
 }
 
 // Given an data_source object, add it to a solr doc
 function parse_data_source($document, $value) {
     if (!empty($value) && $value != 'NULL' && $value != 'n/a') {
-        $document->addField('lc_data_source', $value);
+        $document->addField('data_source', $value);
     }
 }
 
 // Given an dataset_tag object, add it to a solr doc
 function parse_dataset_tag($document, $value) {
     if (!empty($value) && $value != 'NULL' && $value != 'n/a') {
-        $document->addField('lc_dataset_tag', $value);
+        $document->addField('dataset_tag', $value);
     }
 }
 
 // Given an shelfrank object, add it to a solr doc
 function parse_shelfrank($document, $value) {
     if (!empty($value) && $value != 'NULL' && $value != 'n/a') {
-        $document->addField('lc_shelfrank', $value);
+        $document->addField('shelfrank', $value);
     }
 }
 
 // Given an score_checkouts_undergrad object, add it to a solr doc
 function parse_score_checkouts_undergrad($document, $value) {
     if (!empty($value) && $value != 'NULL' && $value != 'n/a') {
-        $document->addField('lc_score_checkouts_undergrad', $value);
+        $document->addField('score_checkouts_undergrad', $value);
     }
 }
 
 // Given an score_checkouts_grad object, add it to a solr doc
 function parse_score_checkouts_grad($document, $value) {
     if (!empty($value) && $value != 'NULL' && $value != 'n/a') {
-        $document->addField('lc_score_checkouts_grad', $value);
+        $document->addField('score_checkouts_grad', $value);
     }
 }
 
 // Given an score_checkouts_fac object, add it to a solr doc
 function parse_score_checkouts_fac($document, $value) {
     if (!empty($value) && $value != 'NULL' && $value != 'n/a') {
-        $document->addField('lc_score_checkouts_fac', $value);
+        $document->addField('score_checkouts_fac', $value);
     }
 }
 
 // Given an score_reserves object, add it to a solr doc
 function parse_score_reserves($document, $value) {
     if (!empty($value) && $value != 'NULL' && $value != 'n/a') {
-        $document->addField('lc_score_reserves', $value);
+        $document->addField('score_reserves', $value);
     }
 }
 
 // Given an score_recalls object, add it to a solr doc
 function parse_score_recalls($document, $value) {
     if (!empty($value) && $value != 'NULL' && $value != 'n/a') {
-        $document->addField('lc_score_recalls', $value);
+        $document->addField('score_recalls', $value);
     }
 }
 
 // Given an score_course_texts object, add it to a solr doc
 function parse_score_course_texts($document, $value) {
     if (!empty($value) && $value != 'NULL' && $value != 'n/a') {
-        $document->addField('lc_score_course_texts', $value);
+        $document->addField('score_course_texts', $value);
     }
 }
 
 // Given an score_holding_libs object, add it to a solr doc
 function parse_score_holding_libs($document, $value) {
     if (!empty($value) && $value != 'NULL' && $value != 'n/a') {
-        $document->addField('lc_score_holding_libs', $value);
+        $document->addField('score_holding_libs', $value);
     }
 }
 
 // Given an score_extra_copies object, add it to a solr doc
 function parse_score_extra_copies($document, $value) {
     if (!empty($value) && $value != 'NULL' && $value != 'n/a') {
-        $document->addField('lc_score_extra_copies', $value);
+        $document->addField('score_extra_copies', $value);
     }
 }
 
 // Given an total_score object, add it to a solr doc
 function parse_total_score($document, $value) {
     if (!empty($value) && $value != 'NULL' && $value != 'n/a') {
-        $document->addField('lc_total_score', $value);
+        $document->addField('total_score', $value);
     }
 }
 
@@ -506,7 +506,7 @@ function parse_total_score($document, $value) {
 function parse_note($document, $values) {
     foreach ($values as $value) {
         if (!empty($value) && $value != 'NULL' && $value != 'n/a') {
-            $document->addField('lc_note', $value);
+            $document->addField('note', $value);
         }
     }
 }
@@ -515,7 +515,7 @@ function parse_note($document, $values) {
 function parse_holding_libs($document, $values) {
     foreach ($values as $value) {
         if (!empty($value) && $value != 'NULL' && $value != 'n/a') {
-            $document->addField('lc_holding_libs', $value);
+            $document->addField('holding_libs', $value);
         }
     }
 }
@@ -524,7 +524,7 @@ function parse_holding_libs($document, $values) {
 function parse_loc_call_num_sort_order($document, $values) {
     foreach ($values as $value) {
         if (!empty($value) && $value != 'NULL' && $value != 'n/a') {
-            $document->addField('lc_loc_call_num_sort_order', $value);
+            $document->addField('loc_call_num_sort_order', $value);
         }
     }
 }
@@ -533,7 +533,7 @@ function parse_loc_call_num_sort_order($document, $values) {
 function parse_url($document, $values) {
     foreach ($values as $value) {
         if (!empty($value) && $value != 'NULL' && $value != 'n/a') {
-            $document->addField('lc_url', $value);
+            $document->addField('url', $value);
         }
     }
 }

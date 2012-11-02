@@ -57,16 +57,34 @@ class solr_response_translator {
             $multivalued_fields = $this->lc_config['mulval_fields'];
         }
 
+        $controlled_fields = array();
+        if (!empty($this->lc_config['valid_params'])) {
+            $controlled_fields = $this->lc_config['valid_params'];
+        }
+
         foreach ($this->solr_response->response->docs as $solr_doc) {
+            // Each record becomes a doc
             $doc = array();
+	    // Put any source fields in this array
+	    $source_record = array();
+
             foreach ($solr_doc->getFieldNames() as $field_name) {
                 // If we we detect a scalar that should be an array, cast it as an array
+		$value;
                 if (in_array($field_name, $multivalued_fields)) {
-                    $doc[$field_name] = (array) $solr_doc->$field_name;
+                    $value  = (array) $solr_doc->$field_name;
                 } else {
-                    $doc[$field_name] = $solr_doc->$field_name;
+                    $value = $solr_doc->$field_name;
                 }
+
+		if (in_array($field_name, $controlled_fields)) {
+		    $doc[$field_name] = $value;
+		}
+		else {
+		    $source_record[$field_name] = $value;
+		}
             }
+	    $doc['source_record'] = $source_record;
             $docs[] = $doc;
         }
         $this->results['docs'] = $docs;
