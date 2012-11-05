@@ -33,7 +33,11 @@ function index_items() {
     $m = new \Mongo($config['mongo_connection']);
     $db = $m->selectDB($config['mongo_db']);
     $collection = $db->selectCollection($config['mongo_collection']);
-    $cursor = $collection->find()->batchSize(400);
+
+    try {
+
+    $cursor = $collection->find()->immortal(true)->batchSize(100)->timeout(-1);
+
     
     $count = 0;
     foreach ($cursor as $obj) {
@@ -208,6 +212,12 @@ function index_items() {
 	    // Release memory
         unset ($solr_documents);
     }
+    }
+    catch (MongoCursorException $e) {
+        echo "error message: ".$e->getMessage()."\n";
+        echo "error code: ".$e->getCode()."\n";
+    }
+
 		
     $solr->commit();
     $solr->optimize();
