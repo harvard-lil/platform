@@ -330,7 +330,7 @@ class Apache_Solr_Service
 	{
 		$httpTransport = $this->getHttpTransport();
 
-		$httpResponse = $httpTransport->performGetRequest($url, $timeout);
+		$httpResponse = $httpTransport->performGetRequest($url, 9000000);
 		$solrResponse = new Apache_Solr_Response($httpResponse, $this->_createDocuments, $this->_collapseSingleValueArrays);
 
 		if ($solrResponse->getHttpStatus() != 200)
@@ -356,7 +356,7 @@ class Apache_Solr_Service
 	{
 		$httpTransport = $this->getHttpTransport();
 
-		$httpResponse = $httpTransport->performPostRequest($url, $rawPost, $contentType, $timeout);
+		$httpResponse = $httpTransport->performPostRequest($url, $rawPost, $contentType, 9000000);
 		$solrResponse = new Apache_Solr_Response($httpResponse, $this->_createDocuments, $this->_collapseSingleValueArrays);
 
 		if ($solrResponse->getHttpStatus() != 200)

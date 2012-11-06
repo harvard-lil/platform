@@ -115,7 +115,7 @@ class solr_request_translator {
             $this->solr_data_store_request->start = $this->http_request->params['start'][0];
         }
 
-        if (!empty($this->http_request->params['limit'][0]) && $this->http_request->params['limit'][0] <= 1000) {
+        if (!empty($this->http_request->params['limit'][0]) && $this->http_request->params['limit'][0] <= 250) {
             $this->solr_data_store_request->rows = $this->http_request->params['limit'][0];
         }
 

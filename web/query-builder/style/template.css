@@ -233,3 +233,39 @@ select, input {
 /* -------------------------------------------------------------- 
    end api request specific styling   
 -------------------------------------------------------------- */
+.global-footer {
+/*    position:absolute;
+ *        bottom:0;*/
+    height:60px;   /* Height of the footer */
+    border-top: 1px solid #E5E5E5;
+    font-size: 12px;
+    line-height: 3;
+    margin-top: 26px;
+padding-top:5px;
+}
+
+.global-footer a {
+    color: #888;
+}
+
+.global-footer .branding img{
+    width: 45px;
+    float: right;
+    padding: 0 40px 0 5px;
+}
+
+.global-footer .branding {
+    float: right;
+}
+
+/*.global-footer .branding img {
+ *  *     float: right;
+ *   *         padding: 0 0 0 5px;
+ *    *             width: 45px;
+ *     *             }*/
+
+.footer-elements {
+    padding: 0 0 0 40px;
+    float: left;
+}
+

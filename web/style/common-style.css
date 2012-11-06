@@ -7,6 +7,11 @@ body {
   background-color: #ffffff;
 }
 
+.bodyContent{
+height: 100%;
+    min-height: 100%;
+}
+
 a {
     text-decoration: none;
     color: #F60;
@@ -20,8 +25,7 @@ h1 {
 
 h2 {
   font-size: 24px;
-  line-height: 36px;
-
+    margin: 30px 0 0 0;
 }
 
 h3 {
@@ -42,37 +46,15 @@ ul{
     margin-right: auto ;
 }
 
-#bodyContent p{
-    margin-top:30px;
-    font-size:15px;
-    line-height:28px;
-}
-
-img {
-    display: block; margin-left: auto; margin-right: auto
-}
-
-#container-swap {
-    width: 300px;
-    height:300px;
-    display:block;
-    margin-left: auto ;
-    margin-right: auto ;
-    background:transparent url('../img/librarycloud-small.png') center top no-repeat;
-}
-
-#container-swap:hover{
-    background:url('../img/librarycloud-animation.gif');
-}
-
 .global-footer {
-    position:absolute;
-    bottom:0;
+/*    position:absolute;
+    bottom:0;*/
     height:60px;   /* Height of the footer */
     border-top: 1px solid #E5E5E5;
     font-size: 12px;
     line-height: 3;
-    padding-top: 6px;
+    margin-top: 26px;
+    padding-top:5px;
     width:768px;
 }
 
@@ -91,11 +73,12 @@ img {
 }
 
 /*.global-footer .branding img {
-    float: right;
-    padding: 0 0 0 5px;
-    width: 45px;
-}*/
+ *     float: right;
+ *         padding: 0 0 0 5px;
+ *             width: 45px;
+ *             }*/
 
 .footer-elements {
     float: left;
 }
+

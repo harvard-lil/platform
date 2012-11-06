@@ -197,7 +197,7 @@
 				</table>
 				<br />
 				<p>A search for subjects containing the term <i>computer networks</i> might look something like this:</p>
-				<pre class="code">http://librarycloud.harvard.edu/v1/api/item/?filter=subject_keyword:computer%20networks</pre>
+				<pre class="code">http://librarycloud.harvard.edu/v1/api/item/?filter=lcsh_keyword:computer%20networks</pre>
 				<h3>Source Data: The original, supplied data</h3>
 				<p>We map incoming data to the terms listed in the <a href="#base-fields">Base Fields</a> section above but we realize that you might have a desire to deal with the original data. We've done our best to index the data as it was given to us. You'll find it in the record, in the <i>source_record</i> object. Here's an snippet of how that data appears:</p>
 				<pre class="code">
@@ -269,11 +269,11 @@
 					</tr>
 					<tr>
 						<td>limit</td>
-						<td>Number of records to return</td>
+						<td>Number of records to return. Default is 25. Max is 250.</td>
 					</tr>
 					<tr>
 						<td>start</td>
-						<td>The starting point in the result set</td>
+						<td>The starting point in the result set. Default is 0.</td>
 					</tr>
 				</table>
 
@@ -284,7 +284,11 @@
 				<p>Item metadata contributed by Harvard University is offered under a <a rel="nofollow" class="external text" href="http://creativecommons.org/publicdomain/zero/1.0/">Creative Commons 0</a> license. While the data is freely available for use, the Harvard Library community norms request attribution and that if others improve this data, they make those improvements equally freely available.  In addition, for data that originated in WorldCat, at OCLC’s request, we are asking users to observe the WorldCat <a href="http://www.oclc.org/worldcat/recorduse/policy/odcbynorms.htm">community norms</a>.  We believe that observing these community norms will help promote good practices, foster trust among partners, and encourage growth of the open metadata community.</p>
 				<p>The API is not intended to be used to acquire Harvard data sets in their entirety. Not only is that an inefficient way to gather the data, it can also have an adverse affect on the performance of the API for others. Note also that the data sets are available for bulk download here: <a href="http://openmetadata.lib.harvard.edu/bibdata">http://openmetadata.lib.harvard.edu/bibdata</a>.</p>
 			</div>
+                        <footer class="global-footer">
+                             <span class="footer-elements"><a href="/v1/docs/faq/">FAQ</a> | <a href="/v1/docs/privacy/">Legal</a></span><span class="branding"><a href="http://librarylab.law.harvard.edu">A Harvard Library Innovation Lab Project</a><img src="/v1/docs/img/liblabstamp.png"></span>
+                        </footer>
 		</div>
+
 	</div>
 </body>
 </html>
