@@ -33,10 +33,7 @@ function index_items($mongo_db, $mongo_collection) {
     }
 
     $m = new \Mongo($config['mongo_connection']);
-    
-    // Fetch mongo config from command-line args instead of ini file
-    // $db = $m->selectDB($config['mongo_db']);
-    // $collection = $db->selectCollection($config['mongo_collection']);
+
     $db = $m->selectDB($mongo_db);
     $collection = $db->selectCollection($mongo_collection);
 
@@ -47,13 +44,6 @@ function index_items($mongo_db, $mongo_collection) {
 	    
 	    $count = 0;
 	    foreach ($cursor as $obj) {
-	    		/*
-	    		$cursor_count = count($cursor);
-	    		$object_count = count($obj);
-	    		echo "cursor_count: [$cursor_count]\n";
-	    		echo "object_count: [$object_count]\n";
-	    		print_r($obj);
-					*/
 					
 	        $count++;
 	
@@ -177,7 +167,6 @@ function index_items($mongo_db, $mongo_collection) {
 function parse_scalar($document, $value, $key) {
     if (!empty($value) && $value != 'NULL' && $value != 'n/a') {
         $document->addField($key, $value);
-     		// echo "parse_scalar -- key: [$key] and value: [$value]\n";
 		}
 }
 
@@ -187,7 +176,6 @@ function parse_array($document, $values, $key) {
     foreach ($values as $value) {
         if (!empty($value) && $value != 'NULL' && $value != 'n/a') {
             $document->addField($key, $value);
-     		// echo "parse_array -- key: [$key] and value: [$value]\n";            
         }
     }
   }
