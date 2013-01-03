@@ -3,6 +3,9 @@
 [doc]
 lc_doc_loc = http://librarycloud.org/api
 
+[auth]
+access_key = yourkeyhere
+
 ; We want to accommodate multiple resource types, each with
 ; their own config. Let's handle that here.
 [resource_types]

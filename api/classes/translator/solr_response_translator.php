@@ -26,10 +26,11 @@ class solr_response_translator {
      * @param Apache_Solr_Response $data_store_response our results from Solr (as they come out of the SolrPHPClient library)
      * @param lc_config $lc_config a container holding the details of our config
      */
-    function __construct($data_store_response, $lc_config) {
+    function __construct($data_store_response, $lc_config, $http_request) {
         $this->solr_response = $data_store_response;
         $this->results = array();
         $this->lc_config = $lc_config;
+        $this->http_request = $http_request;
     }
 
     /**
@@ -62,6 +63,21 @@ class solr_response_translator {
             $controlled_fields = $this->lc_config['valid_params'];
         }
 
+        // If the user supplied a key, see if they're authorized
+        $authorized = false;
+        if (!empty($this->http_request->params['key'][0])) {
+            $supplied_key = $this->http_request->params['key'][0];
+
+            if ($supplied_key == $this->lc_config['access_key']) {
+                $authorized = true;
+            }
+        }
+
+        $auth_only_fields = array();
+        if (!empty($this->lc_config['auth_only_fields'])) {
+            $auth_only_fields = $this->lc_config['auth_only_fields'];
+        }
+
         foreach ($this->solr_response->response->docs as $solr_doc) {
             // Each record becomes a doc
             $doc = array();
@@ -69,6 +85,16 @@ class solr_response_translator {
 	    $source_record = array();
 
             foreach ($solr_doc->getFieldNames() as $field_name) {
+
+                // We hide some fields if the user didn't supply a valid key.
+                // if the user isn't authorized and the field is in our auth_only_fields list,
+                // let's skip this field (continue onto the next field in the foreach
+                if (!$authorized) {
+                    if (in_array($field_name, $auth_only_fields)) {
+                        continue;
+                    }
+                }
+
                 // If we we detect a scalar that should be an array, cast it as an array
 		$value;
                 if (in_array($field_name, $multivalued_fields)) {
@@ -83,6 +109,7 @@ class solr_response_translator {
 		else {
 		    $source_record[$field_name] = $value;
 		}
+
             }
 	    $doc['source_record'] = $source_record;
             $docs[] = $doc;

@@ -56,7 +56,6 @@ class solr_request_translator {
      * all resources: api/item/
      */
     function parse_primary_request() {
-        // Set some defaults in case anything goes wacky
 
         // Look ma, we have a direct resource request
         if (!empty($this->http_request->action_params['resource_id'])) {

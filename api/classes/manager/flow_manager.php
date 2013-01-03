@@ -95,7 +95,7 @@ class flow_manager {
 
         // Translate the Solr response to the LibraryCloud data model
         // TODO: Should we be looking for exceptions here?
-        $solr_response_translator = new translator\solr_response_translator($this->data_store_response, $this->lc_config);
+        $solr_response_translator = new translator\solr_response_translator($this->data_store_response, $this->lc_config, $this->http_request);
         $solr_response_translator->translate();
         $this->results = $solr_response_translator->results;
 
