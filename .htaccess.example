@@ -1,3 +1,10 @@
 RewriteEngine On
-RewriteRule (v[^\/]+)\/api librarycloud.$1/api/index.php [NC]
-RewriteRule (v[^\/]+)\/web librarycloud.$1/web/query_builder.html [NC]
+RewriteRule (v[^\/]+)/api/ platform/platform.$1/api/index.php
+RewriteRule (v[^\/]+)/docs/item/?$ platform/platform.$1/web/docs-item.html
+RewriteRule (v[^\/]+)/docs/style/(.+) platform/platform.$1/web/style/$2 
+RewriteRule (v[^\/]+)/docs/img/(.+) platform/platform.$1/web/img/$2 
+RewriteRule (v[^\/]+)/docs/query-builder/?$ platform/platform.$1/web/query-builder/index.html 
+RewriteRule (v[^\/]+)/docs/query-builder/(.+) platform/platform.$1/web/query-builder/$2 
+RewriteRule (v[^\/]+)/docs/privacy/?$ platform/platform.$1/web/privacy.html 
+RewriteRule (v[^\/]+)/docs/faq/?$ platform/platform.$1/web/faq.html 
+RewriteRule ^$ platform/platform.v1/web/index.html

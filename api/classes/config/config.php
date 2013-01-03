@@ -32,11 +32,11 @@ class config {
      * @throws Exception an exception is raised if the local config isn's consistent
      */
     function get_config() {
-        $memcached = new \Memcached();
-        $memcached->addServer(MEMCACHED_HOST, MEMCACHED_PORT);
+        //$memcached = new \Memcached();
+        //$memcached->addServer(MEMCACHED_HOST, MEMCACHED_PORT);
         
-        if ($memcached->get('lc_config') && MEMCACHED_ENABLED) {
-            return $memcached->get('lc_config');
+        if (false) {//$memcached->get('lc_config') && MEMCACHED_ENABLED) {
+            //return $memcached->get('lc_config');
         }
         else {       
             // Load our master config
@@ -64,7 +64,7 @@ class config {
             }
 
             $merged = array_merge($flattened_master_config, $resource_config);
-            $memcached->set('lc_config', $merged);
+            //$memcached->set('lc_config', $merged);
             return $merged;
         }
     }

@@ -56,11 +56,10 @@ class solr_request_translator {
      * all resources: api/item/
      */
     function parse_primary_request() {
-        // Set some defaults in case anything goes wacky
 
         // Look ma, we have a direct resource request
         if (!empty($this->http_request->action_params['resource_id'])) {
-            $this->solr_data_store_request->query = 'dpla.id:' . $this->http_request->action_params['resource_id'];
+            $this->solr_data_store_request->query = 'id:' . $this->http_request->action_params['resource_id'];
             $this->parse_commons_params();
             $this->parse_facet();
             $this->parse_stats();
@@ -115,7 +114,7 @@ class solr_request_translator {
             $this->solr_data_store_request->start = $this->http_request->params['start'][0];
         }
 
-        if (!empty($this->http_request->params['limit'][0]) && $this->http_request->params['limit'][0] <= 1000) {
+        if (!empty($this->http_request->params['limit'][0]) && $this->http_request->params['limit'][0] <= 250) {
             $this->solr_data_store_request->rows = $this->http_request->params['limit'][0];
         }
 
@@ -136,13 +135,16 @@ class solr_request_translator {
             foreach ($this->http_request->params['filter'] as $filter) {
                 preg_match('/^([^:]*:)(.*)$/', $filter, $matches);
                 $field = $matches[1];
+		$value = '*';
+
+		if (!empty($matches[2])){
+			$value = $matches[2];	
+		}
 
                 // If we have a range filter we don't want to escape the [ TO ]
                 // TODO: Should we always be escaping? Not sure...
-                if (preg_match('/^\[.+ TO/', $matches[2])) {
-                    $value = $matches[2];
-                } else {
-                    $value = solr\utils::escape_solr_value($matches[2]);
+                if (! preg_match('/^\[.+ TO/', $value)) {
+                    $value = solr\utils::escape_solr_value($value);
                 }
                 $scrubbed_filters[] = $field . $value;
             }

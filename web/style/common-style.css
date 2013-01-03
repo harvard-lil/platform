@@ -1,0 +1,84 @@
+body {
+  margin: 0;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 18px;
+  color: #333333;
+  background-color: #ffffff;
+}
+
+.bodyContent{
+height: 100%;
+    min-height: 100%;
+}
+
+a {
+    text-decoration: none;
+    color: #F60;
+}
+
+h1 {
+  font-size: 40px;
+  line-height: 36px;
+    color: #09F;
+}
+
+h2 {
+  font-size: 24px;
+    margin: 30px 0 0 0;
+}
+
+h3 {
+    padding-top:28px;
+    font-size: 20px;
+    line-height:10px;
+    color: #000;
+}
+
+ul{
+    margin-top: -12px;
+}
+
+#content {
+    padding: 0 3em 1em 3em;
+    max-width: 768px;
+    margin-left: auto ;
+    margin-right: auto ;
+}
+
+.global-footer {
+/*    position:absolute;
+    bottom:0;*/
+    height:60px;   /* Height of the footer */
+    border-top: 1px solid #E5E5E5;
+    font-size: 12px;
+    line-height: 3;
+    margin-top: 26px;
+    padding-top:5px;
+    width:768px;
+}
+
+.global-footer a {
+    color: #888;
+}
+
+.global-footer .branding img{
+    width: 45px;
+    float: right;
+    padding: 0 0 0 5px;
+}
+
+.global-footer .branding {
+    float: right;
+}
+
+/*.global-footer .branding img {
+ *     float: right;
+ *         padding: 0 0 0 5px;
+ *             width: 45px;
+ *             }*/
+
+.footer-elements {
+    float: left;
+}
+

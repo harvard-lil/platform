@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>LibraryCloud| API Query Builder</title>
+	<link href="/v1/docs/query-builder/style/template.css" rel="stylesheet" type="text/css" />
+	<link href="/v1/docs/query-builder/style/jquery.multiSelect.css" rel="stylesheet" type="text/css" /> 
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" charset="utf-8" type="text/javascript" ></script>
+	<script src="/v1/docs/query-builder/js/beautify.js" charset="utf-8" type="text/javascript"></script>
+	<script src="/v1/docs/query-builder/js/jquery.multiSelect.js" charset="utf-8" type="text/javascript"></script> 
+	<script src="/v1/docs/query-builder/js/query_builder.js" charset="utf-8" type="text/javascript"></script>
+</head>
+<body>
+	<div class="header group">
+        <div class="title">
+			<h2><a href="http://librarycloud.harvard.edu">Harvard LibaryCloud</a><h2/>
+			<h1 class="page_title">API Request Builder<h1/> 
+        </div><!--ending the left-column-->
+    </div><!--ending the header-->
+    
+    <div class="container group">
+        <div class="sidebar">
+			<div class="content">
+			<p>This tool gives you a taste of the API. See the <a class="link" href="/v1/docs/item">API docs</a> for a complete view of the API and its schema.</p>
+			<br />
+			<br />
+				<form method="get" action="#">
+				<div class="search_pair">
+					<p>Resource Type</p>
+					<div class="form_element">
+	                    <select name="resource_type" id="resource_type">
+	                    	<option value="item" selected="selected">Item</option>
+	                    	<!--<option value="contributor">Contributor</option>-->
+	                    </select>
+                    </div>
+                 </div>
+                 <div class="search_pair">
+                    <p>Access Type</p>
+                    <div class="form_element">
+                    	<select id="access_type" name="access_type">
+                    		<option value="search" selected="selected">Search</option>
+                    		<option value="direct">Direct Access</option>
+                    	</select>
+                    </div>
+                 </div>
+                 <div id="dynamic_fields"></div>
+                 <div class="search_pair">
+	                 <div class="form_element">
+	               	  <input type="submit" id="submit_search" name="submit_search" value="Do it, little dude" class="searchButton"/>
+	                 </div>
+                 </div>
+			</form>      
+			</div>
+        </div><!--ending the left-column-->
+        
+        <div class="main">
+			<div class="content">
+				<div id="request_address">
+					<p>Request Address</p>
+					<textarea class="request_response" id="request"></textarea>
+				</div>
+				<div>
+				<p>Response</p>
+					<textarea class="request_response" id="lc_response"></textarea>
+				</div>
+			</div>
+        </div><!--ending the right-column-->
+    </div><!--ending the container-->
+    
+<footer class="global-footer">
+                             <span class="footer-elements"><a href="/">Home</a> | <a href="/v1/docs/faq/">FAQ</a> | <a href="/v1/docs/privacy/">Legal</a></span><span class="branding"><a href="http://librarylab.law.harvard.edu">A Harvard Library Innovation Lab Project</a><img src="/v1/docs/img/liblabstamp.png"></span>
+                        </footer>
+
+</body>
+</html>

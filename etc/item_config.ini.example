@@ -7,27 +7,87 @@ solr_path = /solr/item
 ; This should be the list of all valid fields in the Solr instance
 ; (We do this so that we can print error messages)
 valid_params[] = id
-valid_params[] = dpla.creator
-valid_params[] = dpla.publisher
-valid_params[] = dpla.format
-valid_params[] = dpla.language
-valid_params[] = dpla.page_count
-valid_params[] = dpla.subject
-valid_params[] = dpla.data_source
-valid_params[] = dpla.resource_type
-valid_params[] = dpla.dataset_tag
+valid_params[] = title
+valid_params[] = title_sort
+valid_params[] = title_link_friendly
+valid_params[] = sub_title
+valid_params[] = creator
+valid_params[] = publisher
+valid_params[] = pub_location
+valid_params[] = pub_date
+valid_params[] = pub_date_numeric
+valid_params[] = format
+valid_params[] = language
+valid_params[] = pages
+valid_params[] = pages_numeric
+valid_params[] = height
+valid_params[] = height_numeric
+valid_params[] = call_num
+valid_params[] = lcsh
+valid_params[] = id_inst
+valid_params[] = id_isbn
+valid_params[] = id_lccn
+valid_params[] = id_oclc
+valid_params[] = online_avail
+valid_params[] = ut_id
+valid_params[] = ut_count
+valid_params[] = loc_call_num_subject
+valid_params[] = data_source
+valid_params[] = dataset_tag
+valid_params[] = shelfrank
+valid_params[] = score_checkouts_undergrad
+valid_params[] = score_checkouts_grad
+valid_params[] = score_checkouts_fac
+valid_params[] = score_reserves
+valid_params[] = score_recalls
+valid_params[] = score_course_texts
+valid_params[] = score_holding_libs
+valid_params[] = score_extra_copies
+valid_params[] = total_score
+valid_params[] = note
+valid_params[] = holding_libs
+valid_params[] = loc_call_num_sort_order
+valid_params[] = url
+
 
 ;Multi-valued fields
-mulval_fields[] = dpla.creator
-mulval_fields[] = dpla.description
-mulval_fields[] = dpla.subject
-mulval_fields[] = dpla.call_num
-mulval_fields[] = dpla.id_isbn
-mulval_fields[] = dpla.content_link
+mulval_fields[] = creator
+mulval_fields[] = call_num
+mulval_fields[] = lcsh
+mulval_fields[] = id_isbn
+mulval_fields[] = note
+mulval_fields[] = holding_libs
+mulval_fields[] = loc_call_num_sort_order
+mulval_fields[] = url
 
 ; Numeric fields:
 ; (These are things we can do Solr stats on)
-numeric_fields[] = checkouts
+numeric_fields[] = pub_date_numeric
+numeric_fields[] = pages_numeric
+numeric_fields[] = height_numeric
+numeric_fields[] = ut_count
+numeric_fields[] = shelfrank
+numeric_fields[] = score_checkouts_undergrad
+numeric_fields[] = score_checkouts_grad
+numeric_fields[] = score_checkouts_fac
+numeric_fields[] = score_reserves
+numeric_fields[] = score_recalls
+numeric_fields[] = score_course_texts
+numeric_fields[] = score_holding_libs
+numeric_fields[] = score_extra_copies
+numeric_fields[] = total_score
+numeric_fields[] = loc_call_num_sort_order
 
 ; Default fields:
-default_sort_field = checkouts
+default_sort_field = shelfrank
+
+;auth_only_fields
+auth_only_fields[] = score_checkouts_undergrad
+auth_only_fields[] = score_checkouts_grad
+auth_only_fields[] = score_checkouts_fac 
+auth_only_fields[] = score_reserves
+auth_only_fields[] = score_recalls 
+auth_only_fields[] = score_course_texts
+auth_only_fields[] = score_holding_libs
+auth_only_fields[] = score_extra_copies
+auth_only_fields[] = total_score
