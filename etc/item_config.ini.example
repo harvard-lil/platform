@@ -80,3 +80,14 @@ numeric_fields[] = loc_call_num_sort_order
 
 ; Default fields:
 default_sort_field = shelfrank
+
+;auth_only_fields
+auth_only_fields[] = score_checkouts_undergrad
+auth_only_fields[] = score_checkouts_grad
+auth_only_fields[] = score_checkouts_fac 
+auth_only_fields[] = score_reserves
+auth_only_fields[] = score_recalls 
+auth_only_fields[] = score_course_texts
+auth_only_fields[] = score_holding_libs
+auth_only_fields[] = score_extra_copies
+auth_only_fields[] = total_score

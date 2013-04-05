@@ -372,11 +372,10 @@ any data added to them will be ignored outright.  -->
 	<field name="id" type="string" indexed="true" stored="true" required="true" />
 
 	<!-- Original fields (text as it was supplied) -->
-	<field name="title" type="string" indexed="true" stored="true"/>
-	<field name="title_sort" type="string" indexed="false" stored="true"/>
+	
+	<!-- Only single values allowed -->
 	<field name="title_link_friendly" type="string" indexed="false" stored="true"/>
 	<field name="sub_title" type="string" indexed="true" stored="true"/>
-	<field name="creator" type="string" indexed="true" stored="true" multiValued="true"/>
 	<field name="publisher" type="string" indexed="true" stored="true"/>
 	<field name="pub_location" type="string" indexed="true" stored="true"/>
 	<field name="pub_date" type="string" indexed="true" stored="true"/>
@@ -387,25 +386,17 @@ any data added to them will be ignored outright.  -->
 	<field name="pages_numeric" type="int" indexed="true" stored="true"/>
 	<field name="height" type="string" indexed="true" stored="true"/>
 	<field name="height_numeric" type="int" indexed="true" stored="true"/>
-
-	<field name="call_num" type="string" indexed="true" stored="true" multiValued="true"/>
-	<field name="lcsh" type="string" indexed="true" stored="true" multiValued="true"/>
-
+	<field name="call_num" type="string" indexed="true" stored="true"/>
 	<field name="id_inst" type="string" indexed="true" stored="true"/>
-	<field name="id_isbn" type="string" indexed="true" stored="true"  multiValued="true"/>
 	<field name="id_lccn" type="string" indexed="true" stored="true"/>
 	<field name="id_oclc" type="string" indexed="true" stored="true"/>
-
 	<field name="online_avail" type="string" indexed="true" stored="true"/>
-
 	<field name="ut_id" type="string" indexed="true" stored="true"/>
 	<field name="ut_count" type="int" indexed="true" stored="true"/>
-
 	<field name="loc_call_num_subject" type="string" indexed="true" stored="true"/>
-
 	<field name="data_source" type="string" indexed="true" stored="true"/>
 	<field name="dataset_tag" type="string" indexed="true" stored="true"/>
-	
+	<field name="collection" type="string" indexed="true" stored="true"/>
 	<field name="shelfrank" type="int" indexed="true" stored="true"/>
 	<field name="score_checkouts_undergrad" type="int" indexed="true" stored="true"/>
 	<field name="score_checkouts_grad" type="int" indexed="true" stored="true"/>
@@ -417,14 +408,20 @@ any data added to them will be ignored outright.  -->
 	<field name="score_extra_copies" type="int" indexed="true" stored="true"/>
 	<field name="total_score" type="int" indexed="true" stored="true"/>
 
+	<!-- Muliple values possible -->
+	<field name="title" type="string" indexed="true" stored="true" multiValued="true"/>
+	<field name="title_sort" type="string" indexed="false" stored="true" multiValued="true"/>
+	<field name="creator" type="string" indexed="true" stored="true" multiValued="true"/>
+	<field name="lcsh" type="string" indexed="true" stored="true" multiValued="true"/>	
+	<field name="id_isbn" type="string" indexed="true" stored="true"  multiValued="true"/>
 	<field name="note" type="string" indexed="true" stored="true" multiValued="true"/>
-
 	<field name="holding_libs" type="string" indexed="true" stored="true" multiValued="true"/>
-
 	<field name="loc_call_num_sort_order" type="int" indexed="true" stored="true" multiValued="true"/>
-
 	<field name="url" type="string" indexed="true" stored="true" multiValued="true"/>
-
+	<field name="toc" type="string" indexed="true" stored="true" multiValued="true"/>
+	<field name="rsrc_key" type="string" indexed="true" stored="true" multiValued="true"/>
+	<field name="rsrc_value" type="string" indexed="true" stored="true" multiValued="true"/>
+	<field name="wp_categories" type="string" indexed="true" stored="true" multiValued="true"/>
 
 	<!-- Keyword searching (normalize text, stem it, etc. here)-->
 	<field name="title_keyword" type="text" indexed="true" stored="false" multiValued="true" omitNorms="true"/>
