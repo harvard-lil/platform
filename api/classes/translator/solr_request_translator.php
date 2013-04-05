@@ -147,6 +147,20 @@ class solr_request_translator {
                 if (! preg_match('/^\[.+ TO/', $value)) {
                     $value = solr\utils::escape_solr_value($value);
                 }
+                
+                // Test for list of id's
+                if (($field == "id:") && (preg_match("/,/", $value, $match))) {
+                	$ids = explode(",", $value);
+                	$id_string = "";
+                	foreach($ids as $id) {
+                		$id_string .= "id:$id OR ";
+                	}
+                	// Remove initial "id:" and final orphan " OR "
+                	$id_string = preg_replace("/^id:/", "", $id_string);
+                	$id_string = preg_replace("/\sOR\s$/", "", $id_string);
+                	$value = $id_string;
+                }
+                
                 $scrubbed_filters[] = $field . $value;
             }
             $this->solr_data_store_request->params['fq'] = $scrubbed_filters;
