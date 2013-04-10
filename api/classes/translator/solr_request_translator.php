@@ -160,6 +160,19 @@ class solr_request_translator {
                 	$value = $id_string;
                 }
                 
+                // Test for list of collections
+                if (($field == "collection:") && (preg_match("/,/", $value, $match))) {
+                	$collections = explode(",", $value);
+                	$collection_string = "";
+                	foreach($collections as $collection) {
+                		$collection_string .= "collection:$collection OR ";
+                	}
+                	// Remove initial "collection:" and final orphan " OR "
+                	$collection_string = preg_replace("/^collection:/", "", $collection_string);
+                	$collection_string = preg_replace("/\sOR\s$/", "", $collection_string);
+                	$value = $collection_string;
+                }
+                
                 $scrubbed_filters[] = $field . $value;
             }
             $this->solr_data_store_request->params['fq'] = $scrubbed_filters;
