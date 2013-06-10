@@ -41,7 +41,6 @@ class solr_request_translator {
         // Set some defaults
         $this->solr_data_store_request->resource = $this->http_request->action_params['resource_type'];
         $this->solr_data_store_request->query = '*:*';
-        $this->solr_data_store_request->params = array('sort' => $this->lc_config['default_sort_field'] . ' desc');
         $this->solr_data_store_request->start = 0;
         $this->solr_data_store_request->rows = 25;
 
