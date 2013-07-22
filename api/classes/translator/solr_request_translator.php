@@ -122,6 +122,12 @@ class solr_request_translator {
         if (!empty($this->http_request->params['sort'][0])) {
             $this->solr_data_store_request->params['sort'] = $this->http_request->params['sort'][0];
         }
+
+	// Return fields.
+        if (!empty($this->http_request->params['fields'])) {
+            $this->solr_data_store_request->params['fl'] = $this->http_request->params['fields'];
+        }
+
     }
 
     /**
