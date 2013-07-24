@@ -119,8 +119,8 @@ class solr_request_translator {
         }
 
         // Sorting controls:
-        if (!empty($this->http_request->params['sort'][0])) {
-            $this->solr_data_store_request->params['sort'] = $this->http_request->params['sort'][0];
+        if (!empty($this->http_request->params['sort'])) {
+            $this->solr_data_store_request->params['sort'] = $this->http_request->params['sort'];
         }
 
 	// Return fields.
