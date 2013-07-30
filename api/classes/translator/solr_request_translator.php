@@ -84,12 +84,14 @@ class solr_request_translator {
 
             $this->solr_data_store_request->query = $solr_query_string;
 
+            $this->parse_filter();
             $this->parse_commons_params();
             $this->parse_facet();
             $this->parse_stats();
 
             // Look ma, we have a request for all resources
         } elseif (!empty($this->http_request->action_params['resource_type'])) {
+            $this->parse_filter();
             $this->parse_commons_params();
             $this->parse_facet();
             $this->parse_stats();
@@ -126,10 +128,68 @@ class solr_request_translator {
             $this->solr_data_store_request->params['fl'] = $this->http_request->params['fields'];
         }
 
-        if (!empty($this->http_request->params['filter'])) {
-            $this->solr_data_store_request->params['fq'] = $this->http_request->params['filter'];
+    }
+
+    /**
+     * Filters can be a little tricky. Let's parse them here.
+     *
+     * TODO: This method is nasty. Clean it up.
+     */
+    function parse_filter() {
+      if (!empty($this->http_request->params['filter'][0])) {
+        $scrubbed_filters = array();
+        foreach ($this->http_request->params['filter'] as $filter) {
+          if (strpos($filter, ',') !== FALSE){
+            //if (!empty($this->http_request->params['filter'][0])) {
+            preg_match('/^([^:]*:)(.*)$/', $filter, $matches);
+            $field = $matches[1];
+            $value = '*';
+
+            if (!empty($matches[2])){
+              $value = $matches[2];
+            }
+
+            // If we have a range filter we don't want to escape the [ TO ]
+            // TODO: Should we always be escaping? Not sure...
+            if (! preg_match('/^\[.+ TO/', $value)) {
+              $value = solr\utils::escape_solr_value($value);
+            }
+
+            // Test for list of id's
+            if (($field == "id:") && (preg_match("/,/", $value, $match))) {
+              $ids = explode(",", $value);
+              $id_string = "";
+              foreach($ids as $id) {
+                $id_string .= "id:$id OR ";
+              }
+              // Remove initial "id:" and final orphan " OR "
+              $id_string = preg_replace("/^id:/", "", $id_string);
+              $id_string = preg_replace("/\sOR\s$/", "", $id_string);
+              $value = $id_string;
+            }
+
+            // Test for list of collections
+            if (($field == "collection:") && (preg_match("/,/", $value, $match))) {
+              $collections = explode(",", $value);
+              $collection_string = "";
+              foreach($collections as $collection) {
+                $collection_string .= "collection:$collection OR ";
+              }
+              // Remove initial "collection:" and final orphan " OR "
+              $collection_string = preg_replace("/^collection:/", "", $collection_string);
+              $collection_string = preg_replace("/\sOR\s$/", "", $collection_string);
+              $value = $collection_string;
+            }
+
+            $scrubbed_filters[] = $field . $value;
+          }
+          else {
+            $scrubbed_filters[] = $filter;
+          }
         }
 
+        $this->solr_data_store_request->params['fq'] = $scrubbed_filters;
+      }
     }
 
     /**
