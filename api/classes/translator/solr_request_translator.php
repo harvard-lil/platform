@@ -34,8 +34,8 @@ class solr_request_translator {
     }
 
     /**
-     * Let's translate the request set by our contructor into somethign we can pass to our 
-     * 
+     * Let's translate the request set by our contructor into somethign we can pass to our
+     *
      */
     function translate() {
         // Set some defaults
@@ -75,7 +75,7 @@ class solr_request_translator {
             }
 
             $solr_query_string = $query_field_key . ':';
-            
+
             if ($query_field_value != '*') {
                 $solr_query_string = $solr_query_string . solr\utils::escape_solr_value($query_field_value);
             } else {
@@ -84,14 +84,12 @@ class solr_request_translator {
 
             $this->solr_data_store_request->query = $solr_query_string;
 
-            $this->parse_filter();
             $this->parse_commons_params();
             $this->parse_facet();
             $this->parse_stats();
 
             // Look ma, we have a request for all resources
         } elseif (!empty($this->http_request->action_params['resource_type'])) {
-            $this->parse_filter();
             $this->parse_commons_params();
             $this->parse_facet();
             $this->parse_stats();
@@ -103,7 +101,7 @@ class solr_request_translator {
 
     /**
      * Some params will be common to many types of requests. Parse here.
-     * 
+     *
      */
     function parse_commons_params() {
         // Resource, probably item or event
@@ -119,69 +117,24 @@ class solr_request_translator {
         }
 
         // Sorting controls:
-        if (!empty($this->http_request->params['sort'][0])) {
-            $this->solr_data_store_request->params['sort'] = $this->http_request->params['sort'][0];
+        if (!empty($this->http_request->params['sort'])) {
+            $this->solr_data_store_request->params['sort'] = $this->http_request->params['sort'];
         }
-    }
 
-    /**
-     * Filters can be a little tricky. Let's parse them here.
-     * 
-     * TODO: This method is nasty. Clean it up.
-     */
-    function parse_filter() {
-        if (!empty($this->http_request->params['filter'][0])) {
-            $scrubbed_filters = array();
-            foreach ($this->http_request->params['filter'] as $filter) {
-                preg_match('/^([^:]*:)(.*)$/', $filter, $matches);
-                $field = $matches[1];
-		$value = '*';
-
-		if (!empty($matches[2])){
-			$value = $matches[2];	
-		}
-
-                // If we have a range filter we don't want to escape the [ TO ]
-                // TODO: Should we always be escaping? Not sure...
-                if (! preg_match('/^\[.+ TO/', $value)) {
-                    $value = solr\utils::escape_solr_value($value);
-                }
-                
-                // Test for list of id's
-                if (($field == "id:") && (preg_match("/,/", $value, $match))) {
-                	$ids = explode(",", $value);
-                	$id_string = "";
-                	foreach($ids as $id) {
-                		$id_string .= "id:$id OR ";
-                	}
-                	// Remove initial "id:" and final orphan " OR "
-                	$id_string = preg_replace("/^id:/", "", $id_string);
-                	$id_string = preg_replace("/\sOR\s$/", "", $id_string);
-                	$value = $id_string;
-                }
-                
-                // Test for list of collections
-                if (($field == "collection:") && (preg_match("/,/", $value, $match))) {
-                	$collections = explode(",", $value);
-                	$collection_string = "";
-                	foreach($collections as $collection) {
-                		$collection_string .= "collection:$collection OR ";
-                	}
-                	// Remove initial "collection:" and final orphan " OR "
-                	$collection_string = preg_replace("/^collection:/", "", $collection_string);
-                	$collection_string = preg_replace("/\sOR\s$/", "", $collection_string);
-                	$value = $collection_string;
-                }
-                
-                $scrubbed_filters[] = $field . $value;
-            }
-            $this->solr_data_store_request->params['fq'] = $scrubbed_filters;
+	// Return fields.
+        if (!empty($this->http_request->params['fields'])) {
+            $this->solr_data_store_request->params['fl'] = $this->http_request->params['fields'];
         }
+
+        if (!empty($this->http_request->params['filter'])) {
+            $this->solr_data_store_request->params['fq'] = $this->http_request->params['filter'];
+        }
+
     }
 
     /**
      * Facet reqeusts are per field reuests. Parse here
-     * 
+     *
      * TODO: This method is nasty looking too. Clean it up.
      */
     function parse_facet() {
@@ -201,7 +154,7 @@ class solr_request_translator {
         }
 
         // Handle facet query faceting. This comes in the form of http://...&facet_query=circ_fac_score:[2 TO *]
-        if (!empty($this->http_request->params['facet_query'][0])) {    
+        if (!empty($this->http_request->params['facet_query'][0])) {
             $this->solr_data_store_request->params['facet.query'] = $this->http_request->params['facet_query'];
             $this->solr_data_store_request->params['facet'] = 'true';
         }
@@ -209,7 +162,7 @@ class solr_request_translator {
 
     /**
      * Solr can give us stats about numeric fields. Parse here.
-     * 
+     *
      */
     function parse_stats() {
         // TODO: We should probably do some validation here

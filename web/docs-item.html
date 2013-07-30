@@ -148,7 +148,7 @@
 				</table>
 				<br />
 				<p>In addition to the traditional bibliographic data listed above, we try to associate community engagement values for each record. These are often unreliable, rough guess, based on data since 2002.</p>
-				
+
 				<table>
 					<tr>
 						<th>Field name</th>
@@ -197,7 +197,7 @@
 				</table>
 				<br />
 				<p>A search for subjects containing the term <i>computer networks</i> might look something like this:</p>
-				<pre class="code">http://librarycloud.harvard.edu/v1/api/item/?filter=lcsh_keyword:computer%20networks</pre>
+				<pre class="code">http://librarycloud.harvard.edu/v1/api/item/?filter=lcsh_keyword:computer networks</pre>
 				<h3>Source Data: The original, supplied data</h3>
 				<p>We map incoming data to the terms listed in the <a href="#base-fields">Base Fields</a> section above but we realize that you might have a desire to deal with the original data. We've done our best to index the data as it was given to us. You'll find it in the record, in the <i>source_record</i> object. Here's an snippet of how that data appears:</p>
 				<pre class="code">
@@ -260,6 +260,37 @@
 				<pre class="code">http://librarycloud.harvard.edu/v1/api/item/?filter=keyword:internet&amp;facet=holding_libs</pre>
 				<p>You can use multiple filters to trim down your results. A search for items containing the term <i>internet</i>, faceting on search <i>holding_libs</i>, limiting ourselves to the records that have <i>michigan</i> in the notes field, might look like this:</p>
 				<pre class="code">http://librarycloud.harvard.edu/v1/api/item/?filter=keyword:internet&amp;filter=note_keyword:michigan&amp;facet=holding_libs</pre>
+
+                <p>You can use boolean logic in filters.</p>
+
+                <p>For books published in 1947: </p>
+
+                <pre class="code">http://librarycloud.law.harvard.edu/v1/api/item/?filter=pub_date_numeric:1947</pre>
+
+                <p>For books published in 1947 or 1956: </p>
+
+                <pre class="code">http://librarycloud.law.harvard.edu/v1/api/item/?filter=pub_date_numeric:(1947 OR 1956)</pre>
+
+                <p>For books with a shelfrank between 5 and 80: </p>
+
+                <pre class="code">http://librarycloud.law.harvard.edu/v1/api/item/?filter=shelfrank:5 TO 90</pre>
+
+                <p>For books with a shelfrank of less than 6: </p>
+
+                <pre class="code">http://librarycloud.law.harvard.edu/v1/api/item/?filter=shelfrank:* TO 6</pre>
+
+                <p>For books with a shelfrank between 5 and 90 and were published in 1947, or books that were published in 1965: </p>
+
+                <pre class="code">http://librarycloud.law.harvard.edu/v1/api/item/?filter=(shelfrank:5 TO_90 AND pub_date_numeric:1947) OR (pub_date_numeric:1956)</pre>
+
+                <p>As a note, it is possible to have multiple filters, like so: <p>
+
+                <pre class="code">http://librarycloud.law.harvard.edu/v1/api/item/?filter=(shelfrank:5 TO 90 AND pub_date_numeric:1947) OR (pub_date_numeric:1956)&filter=shelfrank:* TO 6</pre>
+
+                <p>In these cases, the filters are AND-ed together, so that call is the same as this one: </p>
+
+                <pre class="code">http://librarycloud.law.harvard.edu/v1/api/item/?filter=(shelfrank:5 TO_90 AND pub_date_numeric:1947) OR (pub_date_numeric:1956) AND shelfrank:* TO 6</pre>
+
 				<h3>Controls</h3>
 				<p>Common API controls are available:</p>
 				<table>
@@ -275,11 +306,22 @@
 						<td>start</td>
 						<td>The starting point in the result set. Default is 0.</td>
 					</tr>
+					<tr>
+						<td>fields</td>
+						<td>Specify the fields returned. Library Cloud defults to returning all available fields unless otherwise specified.</td>
+					</tr>
+					<tr>
+						<td>sort</td>
+						<td>Specify specify a sort field (int fields only) and sort order (asc or desc). Secondary sorts can be specified.</td>
+					</tr>
 				</table>
 
 				<p>A search for items containing the term <i>internet</i>, limiting the return number 10, starting at record 30:</p>
-				<pre class="code">http://librarycloud.harvard.edu/v1/api/item/?filter=keyword:internet&amp;limit=10&amp;start=30</pre>
-				
+				<pre class="code">http://librarycloud.harvard.edu/v1/api/item/?filter=keyword:internet&limit=10&start=30</pre>
+                <p>A query for items sorted by the publication year in descening order, falling back to a sort of shelfrank in ascending order when the primary sort fails, and finally falling back to a sort by page count in ascending order when other sorts fail.</p>
+
+                <pre class="code">http://librarycloud.law.harvard.edu/v1/api/item/?sort=pub_date_numeric desc,shelfrank asc,pages_numeric asc</pre>
+
 				<a name="note-on-usage"><h3>Note on Usage</h3></a>
 				<p>Item metadata contributed by Harvard University is offered under a <a rel="nofollow" class="external text" href="http://creativecommons.org/publicdomain/zero/1.0/">Creative Commons 0</a> license. While the data is freely available for use, the Harvard Library community norms request attribution and that if others improve this data, they make those improvements equally freely available.  In addition, for data that originated in WorldCat, at OCLC’s request, we are asking users to observe the WorldCat <a href="http://www.oclc.org/worldcat/recorduse/policy/odcbynorms.htm">community norms</a>.  We believe that observing these community norms will help promote good practices, foster trust among partners, and encourage growth of the open metadata community.</p>
 				<p>The API is not intended to be used to acquire Harvard data sets in their entirety. Not only is that an inefficient way to gather the data, it can also have an adverse affect on the performance of the API for others. Note also that the data sets are available for bulk download here: <a href="http://openmetadata.lib.harvard.edu/bibdata">http://openmetadata.lib.harvard.edu/bibdata</a>.</p>
