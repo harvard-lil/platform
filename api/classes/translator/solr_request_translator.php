@@ -87,7 +87,7 @@ class solr_request_translator {
             $this->parse_filter();
             $this->parse_commons_params();
             $this->parse_facet();
-            $this->parse_stats();
+             $this->parse_stats();
 
             // Look ma, we have a request for all resources
         } elseif (!empty($this->http_request->action_params['resource_type'])) {
@@ -140,7 +140,6 @@ class solr_request_translator {
         $scrubbed_filters = array();
         foreach ($this->http_request->params['filter'] as $filter) {
           if (strpos($filter, ',') !== FALSE){
-            //if (!empty($this->http_request->params['filter'][0])) {
             preg_match('/^([^:]*:)(.*)$/', $filter, $matches);
             $field = $matches[1];
             $value = '*';
@@ -184,6 +183,10 @@ class solr_request_translator {
             $scrubbed_filters[] = $field . $value;
           }
           else {
+            $filter = solr\utils::escape_solr_value($filter);
+            foreach ($this->lc_config['valid_params'] as $p){
+              $filter = str_replace($p . "\\:", $p . ":", $filter);
+            }
             $scrubbed_filters[] = $filter;
           }
         }
