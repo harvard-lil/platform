@@ -53,7 +53,7 @@ valid_params[] = title_keyword
 valid_params[] = creator_keyword
 valid_params[] = note_keyword
 valid_params[] = lcsh_keyword
-
+valid_params[] = wp_categories
 
 ;Multi-valued fields
 mulval_fields[] = creator
