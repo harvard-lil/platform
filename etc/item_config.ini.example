@@ -48,6 +48,11 @@ valid_params[] = note
 valid_params[] = holding_libs
 valid_params[] = loc_call_num_sort_order
 valid_params[] = url
+valid_params[] = keyword
+valid_params[] = title_keyword
+valid_params[] = creator_keyword
+valid_params[] = note_keyword
+valid_params[] = lcsh_keyword
 
 
 ;Multi-valued fields
@@ -84,9 +89,9 @@ default_sort_field = shelfrank
 ;auth_only_fields
 auth_only_fields[] = score_checkouts_undergrad
 auth_only_fields[] = score_checkouts_grad
-auth_only_fields[] = score_checkouts_fac 
+auth_only_fields[] = score_checkouts_fac
 auth_only_fields[] = score_reserves
-auth_only_fields[] = score_recalls 
+auth_only_fields[] = score_recalls
 auth_only_fields[] = score_course_texts
 auth_only_fields[] = score_holding_libs
 auth_only_fields[] = score_extra_copies
