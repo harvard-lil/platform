@@ -184,7 +184,7 @@ class solr_request_translator {
           }
           else {
             $filter = solr\utils::escape_solr_value($filter);
-            foreach ($this->lc_config['valid_params'] as $p){
+            foreach ($this->lc_config['fields'] as $p){
               $filter = str_replace($p . "\\:", $p . ":", $filter);
             }
             $scrubbed_filters[] = $filter;
